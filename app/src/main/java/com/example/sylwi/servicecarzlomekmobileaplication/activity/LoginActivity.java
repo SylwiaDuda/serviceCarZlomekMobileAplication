@@ -1,8 +1,9 @@
-package com.example.sylwi.servicecarzlomekmobileaplication;
+package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -18,8 +19,8 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
-import android.text.Layout;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -30,6 +31,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.FocusChangeListenerValidate;
+import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
+import com.google.gson.Gson;
+
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,12 +60,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * A dummy authentication store containing known user names and passwords.
      * TODO: remove after connecting to a real authentication system.
      */
-    private static final String[] DUMMY_CREDENTIALS = new String[]{
-            "sylwia@gmail.com:duda",
-    };
+   /* private static final String[] DUMMY_CREDENTIALS = new String[]{
+            "s:ddddd",
+    };*/
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+    private String ip;
+    private static Context mContext;
     private UserLoginTask mAuthTask = null;
 
     // UI references.
@@ -69,12 +82,15 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         setContentView(R.layout.activity_login);
         View loginLayout = findViewById(R.id.loginLayout);
         loginLayout.getBackground().setAlpha(50);
-
+        mContext = getApplicationContext();
+        ip = getString(R.string.ip);
         // Set up the login form.
+
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-
+        mEmailView.setOnFocusChangeListener(new FocusChangeListenerValidate(mEmailView, mContext));
         mPasswordView = (EditText) findViewById(R.id.password);
+
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -197,12 +213,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+         return email.matches("/*@*.*");
     }
 
     private boolean isPasswordValid(String password) {
         //TODO: Replace this with your own logic
-        return password.length() > 4;
+        return password.length() >= 4;
     }
 
     /**
@@ -311,6 +327,48 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
+
+        try{
+               URL url = new URL("http://"+ip+"/warsztatZlomek/rest/authorization/signIn");
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                //httpURLConnection.setRequestProperty("cache-control", "no-cache");
+                httpURLConnection.setDoInput(true);
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                Gson gson = new Gson();
+                wr.writeBytes(gson.toJson(new SignInModel(mEmail, mPassword)));
+                wr.flush();
+                wr.close();
+            EditText mmPasswordView = (EditText) findViewById(R.id.email);
+            mmPasswordView.setText("gudbwpci;wa");
+                int status = httpURLConnection.getResponseCode();
+                //EditText mmPasswordView = (EditText) findViewById(R.id.email);
+                String str = String.valueOf(status);
+            Log.e("tag",str);
+            mmPasswordView.setText(str);
+                switch (status) {
+                    case 200:
+                        return false;
+                    case 201:
+                        //TODO: process response server (get token)
+                        // Return true in case of successfull login
+                        // Return false otherwise
+                    case 400:
+                    case 500:
+                    default: return false;
+                }
+
+            } catch (MalformedURLException e) {
+                 EditText mmPasswordView = (EditText) findViewById(R.id.email);
+                mmPasswordView.setText("MalformedURLException e");
+                e.printStackTrace();
+            } catch (IOException e) {//openConnection
+                e.printStackTrace();
+            }
+
+            return false;
+/*
             // TODO: attempt authentication against a network service.
 
             try {
@@ -327,9 +385,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     return pieces[1].equals(mPassword);
                 }
             }
-
             // TODO: register the new account here.
             return true;
+*/
         }
 
         @Override
