@@ -13,4 +13,6 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="visit_date_label">Wybierz datę wizyty</string>
+    <string name="is_overview">Czy jest to przegląd?</string>
 </resources>
