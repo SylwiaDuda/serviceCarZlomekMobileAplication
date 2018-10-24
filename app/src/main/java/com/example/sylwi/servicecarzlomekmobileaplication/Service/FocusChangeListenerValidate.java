@@ -24,15 +24,14 @@ public class FocusChangeListenerValidate implements View.OnFocusChangeListener{
         String text = editText.getText().toString();
         boolean empty = TextUtils.isEmpty(text);
         boolean pattern=true;
+       // editText.addTextChangedListener(new TextWatcherValidate(editText,context));
         if(editText.getId()== R.id.email){
-           /* Pattern pattern = Pattern.compile("[A-ZĄĆĘŁŃÓŚŻŹ][a-ząćęłńóśżź]+");
-            Matcher matcher = pattern.matcher(text);*/
             pattern= android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches();
         }
         if(!pattern && !b){
             editText.setError(context.getString(R.string.error_invalid_email));
         }else if(pattern){
-            editText.setError(null);
+            //editText.setError(null);
         }
         if(empty && !b){
             editText.setError(context.getString(R.string.error_field_required));

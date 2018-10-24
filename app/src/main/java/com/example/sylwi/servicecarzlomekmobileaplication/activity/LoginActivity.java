@@ -33,6 +33,8 @@ import android.widget.TextView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.FocusChangeListenerValidate;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidate;
+import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
 import com.google.gson.Gson;
 
@@ -40,6 +42,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -71,11 +74,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
+    //private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mEmailView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-
+    private boolean correctEmail = false;
+    private boolean correctPassword = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +94,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
         mEmailView.setOnFocusChangeListener(new FocusChangeListenerValidate(mEmailView, mContext));
+        mEmailView.addTextChangedListener(new TextWatcherValidate(mEmailView,mContext));
         mPasswordView = (EditText) findViewById(R.id.password);
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -182,6 +188,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         // Check for a valid password, if the user entered one.
         if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+            Log.d("fsafw","dwefq3");
             mPasswordView.setError(getString(R.string.error_invalid_password));
             focusView = mPasswordView;
             cancel = true;
@@ -328,46 +335,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
 
-        try{
-               URL url = new URL("http://"+ip+"/warsztatZlomek/rest/authorization/signIn");
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setRequestProperty("Content-Type", "application/json");
-                //httpURLConnection.setRequestProperty("cache-control", "no-cache");
-                httpURLConnection.setDoInput(true);
-                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-                Gson gson = new Gson();
-                wr.writeBytes(gson.toJson(new SignInModel(mEmail, mPassword)));
-                wr.flush();
-                wr.close();
-            EditText mmPasswordView = (EditText) findViewById(R.id.email);
-            mmPasswordView.setText("gudbwpci;wa");
-                int status = httpURLConnection.getResponseCode();
-                //EditText mmPasswordView = (EditText) findViewById(R.id.email);
-                String str = String.valueOf(status);
-            Log.e("tag",str);
-            mmPasswordView.setText(str);
-                switch (status) {
-                    case 200:
-                        return false;
-                    case 201:
-                        //TODO: process response server (get token)
-                        // Return true in case of successfull login
-                        // Return false otherwise
-                    case 400:
-                    case 500:
-                    default: return false;
-                }
+            boolean emailExist = checkIfEmailExist();
+            if(emailExist){
+                return zaloguj();
+            }else return false;
 
-            } catch (MalformedURLException e) {
-                 EditText mmPasswordView = (EditText) findViewById(R.id.email);
-                mmPasswordView.setText("MalformedURLException e");
-                e.printStackTrace();
-            } catch (IOException e) {//openConnection
-                e.printStackTrace();
-            }
-
-            return false;
 /*
             // TODO: attempt authentication against a network service.
 
@@ -389,7 +361,78 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
 */
         }
+        public boolean checkIfEmailExist(){
+            try {
+                URL url = new URL("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail");
+                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                //httpURLConnection.setRequestProperty("cache-control", "no-cache");
+                httpURLConnection.setDoInput(true);
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                Gson gson = new Gson();
+                wr.writeBytes(gson.toJson(new CheckEmailModel(mEmail)));
+                wr.flush();
+                wr.close();
+                int status = httpURLConnection.getResponseCode();
+                String str = String.valueOf(status);
+                Log.e("tagSignin", str);
+                switch (status) {
+                    case 200:
+                        correctEmail=true;
+                        return true;
+                    case 400:
+                        correctEmail=false;
+                        return false;
+                    default:
+                        correctEmail=false;
+                        return false;
 
+                }
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
+        public boolean zaloguj(){
+            try {
+                URL urlCheckEmail = new URL("http://" + ip + ":8080/warsztatZlomek/rest/authorization/signIn");
+                HttpURLConnection httpURLConnection = (HttpURLConnection) urlCheckEmail.openConnection();
+                httpURLConnection.setRequestMethod("POST");
+                httpURLConnection.setRequestProperty("Content-Type", "application/json");
+                httpURLConnection.setDoInput(true);
+                DataOutputStream dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+                Gson gsonCE = new Gson();
+                dataOutputStream.writeBytes(gsonCE.toJson(new SignInModel(mEmail,mPassword)));
+                dataOutputStream.flush();
+                dataOutputStream.close();
+                int status = httpURLConnection.getResponseCode();
+                String str = String.valueOf(status);
+                Log.e("tag", str);
+                switch (status) {
+                    case 200:
+                        correctPassword=true;
+                        return true;
+                    case 400:
+                        correctPassword=false;
+                        return false;
+                    default:
+                        correctPassword=false;
+                        return false;
+                }
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return false;
+        }
         @Override
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
@@ -397,12 +440,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             if (success) {
                 finish();
-            } else {
+            } else if(!correctEmail && !correctPassword) {
+                mEmailView.setError(getString(R.string.error_email_NOT_EXIST));
+                mEmailView.requestFocus();
+                Log.e("tag", "niepoprawny email");
+            }else if(correctEmail && !correctPassword){
+                Log.e("tag", "niepoprawne hasło");
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }
         }
-
         @Override
         protected void onCancelled() {
             mAuthTask = null;
