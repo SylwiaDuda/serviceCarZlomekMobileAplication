@@ -2,6 +2,8 @@
     <string name="app_name">ZŁOMEK car service</string>
 
     <!-- Strings related to login -->
+
+    <string name="ip">192.168.43.159</string>
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Hasło</string>
     <string name="action_sign_in">Zaloguj się</string>
@@ -15,4 +17,7 @@
     </string>
     <string name="visit_date_label">Wybierz datę wizyty</string>
     <string name="is_overview">Czy jest to przegląd?</string>
+
+    <string name="error_email_NOT_EXIST">Konto o podanym e-mail nie istnieje!</string>
+
 </resources>
