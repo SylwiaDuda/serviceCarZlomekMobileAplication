@@ -38,6 +38,7 @@
             android:name=".activity.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity android:name=".AddVisitActivity"></activity>
     </application>
 
 </manifest>
