@@ -5,20 +5,20 @@ package com.example.sylwi.servicecarzlomekmobileaplication.model;
  */
 
 public class SignInModel {
-    private String username;
+    private String email;
     private String password;
 
-    public SignInModel(String username, String password) {
-        this.username = username;
+    public SignInModel(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
-    public String getusername() {
-        return username;
+    public String getemail() {
+        return email;
     }
 
-    public void setusername(String username) {
-        this.username = username;
+    public void setemail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {

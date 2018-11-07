@@ -10,11 +10,11 @@ import com.example.sylwi.servicecarzlomekmobileaplication.R;
  * Created by sylwi on 18.10.2018.
  */
 
-public class FocusChangeListenerValidate implements View.OnFocusChangeListener{
+public class FocusChangeListenerValidateSignInForm implements View.OnFocusChangeListener{
 
     EditText editText;
     Context context;
-    public FocusChangeListenerValidate(EditText editText, Context context) {
+    public FocusChangeListenerValidateSignInForm(EditText editText, Context context) {
         this.editText = editText;
         this.context = context;
     }
@@ -24,7 +24,7 @@ public class FocusChangeListenerValidate implements View.OnFocusChangeListener{
         String text = editText.getText().toString();
         boolean empty = TextUtils.isEmpty(text);
         boolean pattern=true;
-       // editText.addTextChangedListener(new TextWatcherValidate(editText,context));
+       // editText.addTextChangedListener(new TextWatcherValidateSignInForm(editText,context));
         if(editText.getId()== R.id.email){
             pattern= android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches();
         }

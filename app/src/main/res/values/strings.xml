@@ -2,8 +2,8 @@
     <string name="app_name">ZŁOMEK car service</string>
 
     <!-- Strings related to login -->
-    <string name="ip">192.168.43.159</string>
-    <string name="prompt_email">Email</string>
+    <string name="ip">192.168.0.103</string>
+    <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Hasło</string>
     <string name="action_sign_in">Zaloguj się</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -15,4 +15,30 @@
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="login">Logowanie</string>
+    <string name="registration">Rejestracja</string>
+    <string name="remind_password">Przyomnij hasło</string>
+    <string name="new_account">Nowe konto</string>
+    
+    
+    
+    <string name="name">Imię:</string>
+    <string name="surname">Nazwisko:</string>
+    <string name="phone_number">Tel:</string>
+    <string name="email">E-mail:</string>
+    <string name="city_name">Miasto</string>
+    <string name="street_name">Ulica:</string>
+    <string name="build_number">Nr domu/lokalu:</string>
+    <string name="apt_number">Nr mieszkania:</string>
+    <string name="zip_code">Kod pocztowy:</string>
+    <string name="password">Hasło:</string>
+    <string name="conf_passwd">Potwierdź hasło:</string>
+    <string name="cancel">Anuluj</string>
+    <string name="create_account">Utwórz konto</string>
 </resources>
+

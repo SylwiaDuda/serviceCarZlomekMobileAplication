@@ -4,9 +4,14 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.app.LoaderManager.LoaderCallbacks;
 
@@ -19,9 +24,12 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.EditorInfo;
@@ -32,8 +40,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
-import com.example.sylwi.servicecarzlomekmobileaplication.Service.FocusChangeListenerValidate;
-import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidate;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.FocusChangeListenerValidateSignInForm;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.NetworkConnection;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidateSignInForm;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
 import com.google.gson.Gson;
@@ -52,7 +61,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor> {
+public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener  {
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -84,8 +93,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-        View loginLayout = findViewById(R.id.loginLayout);
+        setContentView(R.layout.activity_login_layout);
+        View loginLayout = findViewById(R.id.activity_login_layout);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+
         loginLayout.getBackground().setAlpha(50);
         mContext = getApplicationContext();
         ip = getString(R.string.ip);
@@ -93,8 +106,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
-        mEmailView.setOnFocusChangeListener(new FocusChangeListenerValidate(mEmailView, mContext));
-        mEmailView.addTextChangedListener(new TextWatcherValidate(mEmailView,mContext));
+        mEmailView.setOnFocusChangeListener(new FocusChangeListenerValidateSignInForm(mEmailView, mContext));
+        mEmailView.addTextChangedListener(new TextWatcherValidateSignInForm(mEmailView,mContext));
         mPasswordView = (EditText) findViewById(R.id.password);
 
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -119,8 +132,81 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         mLoginFormView = findViewById(R.id.login_form);
 
         mProgressView = findViewById(R.id.login_progress);
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_login_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        Button mNewAccountButton = (Button) findViewById(R.id.button_new_account);
+        mNewAccountButton.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_login_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.navigation_drawer, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_login_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
     private void populateAutoComplete() {
         if (!mayRequestContacts()) {
             return;
@@ -171,56 +257,61 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * errors are presented and no actual login attempt is made.
      */
     private void attemptLogin() {
-        if (mAuthTask != null) {
-            return;
-        }
+        NetworkConnection networkConnection = new NetworkConnection(mContext);
+        boolean networkIsReachable = networkConnection.checkIfNetworkIsReachable();
+        if(networkIsReachable) {
+            if (mAuthTask != null) {
+                return;
+            }
 
-        // Reset errors.
-        mEmailView.setError(null);
-        mPasswordView.setError(null);
+            // Reset errors.
+            mEmailView.setError(null);
+            mPasswordView.setError(null);
 
-        // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
-        String password = mPasswordView.getText().toString();
+            // Store values at the time of the login attempt.
+            String email = mEmailView.getText().toString();
+            String password = mPasswordView.getText().toString();
 
-        boolean cancel = false;
-        View focusView = null;
+            boolean cancel = false;
+            View focusView = null;
 
-        // Check for a valid password, if the user entered one.
-        if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            Log.d("fsafw","dwefq3");
-            mPasswordView.setError(getString(R.string.error_invalid_password));
-            focusView = mPasswordView;
-            cancel = true;
-        }
+            // Check for a valid password, if the user entered one.
+            if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
+                Log.d("fsafw","dwefq3");
+                mPasswordView.setError(getString(R.string.error_invalid_password));
+                focusView = mPasswordView;
+                cancel = true;
+            }
 
-        // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
-            cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
-            cancel = true;
-        }
+            // Check for a valid email address.
+            if (TextUtils.isEmpty(email)) {
+                mEmailView.setError(getString(R.string.error_field_required));
+                focusView = mEmailView;
+                cancel = true;
+            } else if (!isEmailValid(email)) {
+                mEmailView.setError(getString(R.string.error_invalid_email));
+                focusView = mEmailView;
+                cancel = true;
+            }
 
-        if (cancel) {
-            // There was an error; don't attempt login and focus the first
-            // form field with an error.
-            focusView.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to
-            // perform the user login attempt.
-            showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
-            mAuthTask.execute((Void) null);
+            if (cancel) {
+                // There was an error; don't attempt login and focus the first
+                // form field with an error.
+                focusView.requestFocus();
+            } else {
+                // Show a progress spinner, and kick off a background task to
+                // perform the user login attempt.
+                showProgress(true);
+                mAuthTask = new UserLoginTask(email, password);
+                mAuthTask.execute((Void) null);
+            }
+
         }
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-         return email.matches("/*@*.*");
+         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {
@@ -439,7 +530,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             showProgress(false);
 
             if (success) {
-                finish();
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(intent);
             } else if(!correctEmail && !correctPassword) {
                 mEmailView.setError(getString(R.string.error_email_NOT_EXIST));
                 mEmailView.requestFocus();
