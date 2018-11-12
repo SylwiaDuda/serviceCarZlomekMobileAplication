@@ -11,8 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForNotLoggedIn;
 
-public class RegistrationActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class RegistrationActivity extends MenuForNotLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,9 +57,6 @@ public class RegistrationActivity extends AppCompatActivity implements Navigatio
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }

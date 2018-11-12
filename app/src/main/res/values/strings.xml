@@ -44,6 +44,7 @@
     <string name="is_overview">Czy jest to przegląd?</string>
 
     <string name="error_email_NOT_EXIST">Konto o podanym e-mail nie istnieje!</string>
+    <string name="log_out">Wyloguj się</string>
 
 </resources>
 
