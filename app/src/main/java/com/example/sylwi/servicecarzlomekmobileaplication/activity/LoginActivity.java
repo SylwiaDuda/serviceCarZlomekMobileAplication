@@ -36,6 +36,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForNotLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuManager;
@@ -45,7 +46,10 @@ import com.example.sylwi.servicecarzlomekmobileaplication.Service.NetworkConnect
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidateSignInForm;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
+import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
+import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 import com.google.gson.Gson;
+import com.google.gson.stream.JsonReader;
 
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -55,6 +59,7 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -81,6 +86,7 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
     private String ip;
     private static Context mContext;
     private UserLoginTask mAuthTask = null;
+    private CheckEmailTask mCheckEmailTask = null;
 
     // UI references.
     //private AutoCompleteTextView mEmailView;
@@ -88,8 +94,9 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
-    private boolean correctEmail = false;
-    private boolean correctPassword = false;
+    private boolean correctEmail;
+    private boolean correctPassword;
+    private boolean activeSerwer = true;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -253,15 +260,18 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
             boolean cancel = false;
             View focusView = null;
 
+            // Check for a valid email address.
+
             // Check for a valid password, if the user entered one.
-            if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-                Log.d("fsafw","dwefq3");
+            if (TextUtils.isEmpty(password)) {
+                mPasswordView.setError(getString(R.string.error_field_required));
+                focusView = mPasswordView;
+                cancel = true;
+            } else if (!isPasswordValid(password)) {
                 mPasswordView.setError(getString(R.string.error_invalid_password));
                 focusView = mPasswordView;
                 cancel = true;
             }
-
-            // Check for a valid email address.
             if (TextUtils.isEmpty(email)) {
                 mEmailView.setError(getString(R.string.error_field_required));
                 focusView = mEmailView;
@@ -272,6 +282,7 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
                 cancel = true;
             }
 
+
             if (cancel) {
                 // There was an error; don't attempt login and focus the first
                 // form field with an error.
@@ -280,20 +291,18 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
                 // Show a progress spinner, and kick off a background task to
                 // perform the user login attempt.
                 showProgress(true);
-                mAuthTask = new UserLoginTask(email, password);
-                mAuthTask.execute((Void) null);
+                mCheckEmailTask = new CheckEmailTask(email, password);
+                mCheckEmailTask.execute((Void) null);
             }
 
         }
     }
 
     private boolean isEmailValid(String email) {
-        //TODO: Replace this with your own logic
          return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     private boolean isPasswordValid(String password) {
-        //TODO: Replace this with your own logic
         return password.length() >= 4;
     }
 
@@ -391,112 +400,107 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class CheckEmailTask extends AsyncTask<Void, Void, Integer> {
 
         private final String mEmail;
         private final String mPassword;
+        CheckEmailTask(String email, String password) {
+            mEmail = email;
+            mPassword = password;
+        }
 
+        @Override
+        protected Integer doInBackground(Void... params) {
+            REST checkEmail= new REST();
+            Response response = checkEmail.request("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail",new CheckEmailModel(mEmail));
+            if(!(response==null)){
+                activeSerwer=true;
+                int status=response.getResponseStatus();
+                return status;
+            }else{
+                activeSerwer=false;
+                return -1;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(final Integer status) {
+            mCheckEmailTask = null;
+            switch (status) {
+                case 200:
+                    mAuthTask = new UserLoginTask(mEmail, mPassword);
+                    mAuthTask.execute((Void) null);
+                    break;
+                case 400:
+                    showProgress(false);
+                    mEmailView.setError(getString(R.string.error_email_NOT_EXIST));
+                    mEmailView.requestFocus();
+                    break;
+                case -1:
+                    if(!activeSerwer){
+                        showProgress(false);
+                        String toastText = "Server is unreachable!";
+                        Toast toast = Toast.makeText(mContext, toastText, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+        @Override
+        protected void onCancelled() {
+            mCheckEmailTask = null;
+            showProgress(false);
+        }
+    }
+    public class UserLoginTask extends AsyncTask<Void, Void, Integer> {
+
+        private final String mEmail;
+        private final String mPassword;
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-
-            boolean emailExist = checkIfEmailExist();
-            if(emailExist){
-                return zaloguj();
-            }else return false;
-        }
-        public boolean checkIfEmailExist(){
-            try {
-                URL url = new URL("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail");
-                HttpURLConnection httpURLConnection = (HttpURLConnection)url.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setRequestProperty("Content-Type", "application/json");
-                //httpURLConnection.setRequestProperty("cache-control", "no-cache");
-                httpURLConnection.setDoInput(true);
-                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-                Gson gson = new Gson();
-                wr.writeBytes(gson.toJson(new CheckEmailModel(mEmail)));
-                wr.flush();
-                wr.close();
-                int status = httpURLConnection.getResponseCode();
-                String str = String.valueOf(status);
-                Log.e("tagSignin", str);
-                switch (status) {
-                    case 200:
-                        correctEmail=true;
-                        return true;
-                    case 400:
-                        correctEmail=false;
-                        return false;
-                    default:
-                        correctEmail=false;
-                        return false;
-
-                }
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+        protected Integer doInBackground(Void... params) {
+            REST login = new REST();
+            Response response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/authorization/signIn",new SignInModel(mEmail,mPassword));
+            if(!(response==null)) {
+                activeSerwer=true;
+                int status=response.getResponseStatus();
+                Log.d("SignIn response status:", String.valueOf(status));
+                return status;
+            }else{
+                activeSerwer=false;
+                return -1;
             }
-            return false;
-        }
-        public boolean zaloguj(){
-            try {
-                URL urlCheckEmail = new URL("http://" + ip + ":8080/warsztatZlomek/rest/authorization/signIn");
-                HttpURLConnection httpURLConnection = (HttpURLConnection) urlCheckEmail.openConnection();
-                httpURLConnection.setRequestMethod("POST");
-                httpURLConnection.setRequestProperty("Content-Type", "application/json");
-                httpURLConnection.setDoInput(true);
-                DataOutputStream dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
-                Gson gsonCE = new Gson();
-                dataOutputStream.writeBytes(gsonCE.toJson(new SignInModel(mEmail,mPassword)));
-                dataOutputStream.flush();
-                dataOutputStream.close();
-                int status = httpURLConnection.getResponseCode();
-                String str = String.valueOf(status);
-                Log.e("tag", str);
-                switch (status) {
-                    case 200:
-                        correctPassword=true;
-                        return true;
-                    case 400:
-                        correctPassword=false;
-                        return false;
-                    default:
-                        correctPassword=false;
-                        return false;
-                }
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return false;
         }
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final Integer status) {
             mAuthTask = null;
-            showProgress(false);
-
-            if (success) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-            } else if(!correctEmail && !correctPassword) {
-                mEmailView.setError(getString(R.string.error_email_NOT_EXIST));
-                mEmailView.requestFocus();
-                Log.e("tag", "niepoprawny email");
-            }else if(correctEmail && !correctPassword){
-                Log.e("tag", "niepoprawne hasło");
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
-                mPasswordView.requestFocus();
+            switch (status) {
+                case 200:
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    break;
+                case 401:
+                    showProgress(false);
+                    mPasswordView.setError(getString(R.string.error_incorrect_password));
+                    mPasswordView.requestFocus();
+                    break;
+                case -1:
+                    if(!activeSerwer){
+                        showProgress(false);
+                        String toastText = "Server is unreachable!";
+                        Toast toast = Toast.makeText(mContext, toastText, Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                    break;
+                default:
+                    showProgress(false);
+                    break;
             }
         }
         @Override

@@ -10,7 +10,7 @@
     <string name="error_invalid_email">Nieprawidłowy Email</string>
     <string name="error_invalid_password">Nieprawidłowe hasło!</string>
     <string name="error_incorrect_password">Nieprawidłowe hasło!</string>
-    <string name="error_field_required">This field is required</string>
+    <string name="error_field_required">To pole jest wymagane!</string>
     <string name="permission_rationale">"Contacts permissions are needed for providing email
         completions."
     </string>
