@@ -259,6 +259,7 @@ public class RegistrationActivity extends MenuForNotLoggedIn implements Navigati
         if(textIsEmpty){
             if(editText.getId()!=R.id.apt_num_form){
                 editText.setError(getString(R.string.error_field_required));
+                cancel = true;
             }
         }else{
             switch (editText.getId()){
@@ -314,12 +315,7 @@ public class RegistrationActivity extends MenuForNotLoggedIn implements Navigati
                         editText.setError("Wprowadź od 1 do 5 znaków");
                         cancel = true;
                     }else {
-                        String firstSign = text.substring(0,1);
-                        int firstNumer = Integer.valueOf(firstSign);
-                        if(firstNumer<=0){
-                            editText.setError("Numer nie może być mniejszy od zera");
-                            cancel = true;
-                        }
+                        patternForNumber(editText,text);
                     }
                     break;
                 case R.id.apt_num_form:
@@ -327,12 +323,7 @@ public class RegistrationActivity extends MenuForNotLoggedIn implements Navigati
                         editText.setError("Wprowadź do 5 znaków");
                         cancel = true;
                     }else {
-                        String firstSign = text.substring(0,1);
-                        int firstNumer = Integer.valueOf(firstSign);
-                        if(firstNumer<=0){
-                            editText.setError("Numer nie może być mniejszy od zera");
-                            cancel = true;
-                        }
+                        patternForNumber(editText,text);
                     }
                     break;
                 case R.id.zip_code_form:
@@ -379,6 +370,15 @@ public class RegistrationActivity extends MenuForNotLoggedIn implements Navigati
         boolean correctText = matcher.matches();
         if(!correctText ){
             editText.setError("Wprowadź inne hasło");
+            cancel = true;
+        }
+    }
+    public void patternForNumber(EditText editText, String text){
+        Pattern pattern = Pattern.compile("[1-9]{1,}+[a-z,ąęółńćźż]{0,}");
+        Matcher matcher = pattern.matcher(text);
+        boolean correctText = matcher.matches();
+        if(!correctText ){
+            editText.setError("Numer powinien zaczynać się od cyfry większej od 0 w postaci np:. 123c");
             cancel = true;
         }
     }
