@@ -5,17 +5,17 @@ package com.example.sylwi.servicecarzlomekmobileaplication.model;
  */
 
 public class RegistrationModel {
-    String firstName;
-    String lastName;
-    String email;
-    String phoneNumber;
-    String cityName;
-    String streetName;
-    String buildNum;
-    String aptNum;
-    String zipCode;
-    String password;
-    String confirmPassword;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String phoneNumber;
+    private String cityName;
+    private String streetName;
+    private String buildNum;
+    private String aptNum;
+    private String zipCode;
+    private String password;
+    private String confirmPassword;
 
     public RegistrationModel(String firstName, String lastName, String email, String phoneNumber, String cityName, String streetName, String buildNum, String aptNum, String zipCode, String password, String confirmPassword) {
         this.firstName = firstName;

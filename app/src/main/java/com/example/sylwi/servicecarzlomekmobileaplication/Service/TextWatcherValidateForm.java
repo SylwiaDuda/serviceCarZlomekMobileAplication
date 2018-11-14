@@ -9,11 +9,11 @@ import android.widget.EditText;
  * Created by sylwi on 23.10.2018.
  */
 
-public class TextWatcherValidateSignInForm implements TextWatcher{
+public class TextWatcherValidateForm implements TextWatcher{
 
     EditText editText;
     Context context;
-    public TextWatcherValidateSignInForm(EditText editText, Context context) {
+    public TextWatcherValidateForm(EditText editText, Context context) {
         this.editText = editText;
         this.context = context;
     }

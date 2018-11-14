@@ -49,7 +49,6 @@ public class REST {
         DataOutputStream dataOutputStream = null;
         response=null;
         try {
-
             httpURLConnection = getConnection(url);
             dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
             Gson gson = new Gson();

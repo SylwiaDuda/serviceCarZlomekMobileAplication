@@ -1,5 +1,7 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
+import android.content.Intent;
+import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -11,9 +13,11 @@ import android.view.MenuItem;
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForNotLoggedIn;
+import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
 public class MainActivity extends MenuForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +33,12 @@ public class MainActivity extends MenuForLoggedIn implements NavigationView.OnNa
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+       // Intent intent = getIntent();
+       // Bundle bundle = intent.getExtras();
+//        Parcelable parcelable = bundle.getParcelable("RESPONSE");
+        //Response dataResponseFromPreviousActivity = (Response) parcelable;
+
     }
 
     @Override

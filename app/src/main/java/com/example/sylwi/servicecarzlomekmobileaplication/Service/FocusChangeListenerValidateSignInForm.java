@@ -24,7 +24,7 @@ public class FocusChangeListenerValidateSignInForm implements View.OnFocusChange
         String text = editText.getText().toString();
         boolean empty = TextUtils.isEmpty(text);
         boolean pattern=true;
-       // editText.addTextChangedListener(new TextWatcherValidateSignInForm(editText,context));
+       // editText.addTextChangedListener(new TextWatcherValidateForm(editText,context));
         if(editText.getId()== R.id.email){
             pattern= android.util.Patterns.EMAIL_ADDRESS.matcher(text).matches();
         }
