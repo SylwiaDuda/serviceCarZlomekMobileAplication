@@ -13,22 +13,22 @@
     tools:context="com.example.sylwi.servicecarzlomekmobileaplication.activity.RegistrationActivity"
     tools:showIn="@layout/app_bar_registration">
 
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone"
-        />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
+        <ProgressBar
+            android:id="@+id/registration_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone" />
+
         <TextView
-            android:id="@+id/activity_info"
+            android:id="@+id/registration_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -41,6 +41,7 @@
             android:textSize="30sp" />
 
         <ScrollView
+            android:id ="@+id/registration_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -54,8 +55,8 @@
                     android:id="@+id/first_name_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/first_name_form"
-                    android:layout_alignBottom="@+id/first_name_form"
+                    android:layout_alignBaseline="@id/first_name_form"
+                    android:layout_alignBottom="@id/first_name_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/first_name_form"
                     android:text="@string/name"
@@ -73,8 +74,8 @@
                     android:id="@+id/last_name_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/last_name_form"
-                    android:layout_alignBottom="@+id/last_name_form"
+                    android:layout_alignBaseline="@id/last_name_form"
+                    android:layout_alignBottom="@id/last_name_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/last_name_form"
                     android:text="@string/surname"
@@ -84,8 +85,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:id="@+id/last_name_form"
-                    android:layout_below="@+id/first_name_form"
-                    android:layout_toEndOf="@+id/last_name_info"
+                    android:layout_below="@id/first_name_form"
+                    android:layout_toEndOf="@id/last_name_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="textPersonName"/>
 
@@ -93,8 +94,8 @@
                     android:id="@+id/email_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/email_form"
-                    android:layout_alignBottom="@+id/email_form"
+                    android:layout_alignBaseline="@id/email_form"
+                    android:layout_alignBottom="@id/email_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/email_form"
                     android:text="@string/email"
@@ -104,8 +105,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
                     android:id="@+id/email_form"
-                    android:layout_below="@+id/last_name_form"
-                    android:layout_toEndOf="@+id/email_info"
+                    android:layout_below="@id/last_name_form"
+                    android:layout_toEndOf="@id/email_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="textEmailAddress"/>
 
@@ -113,8 +114,8 @@
                     android:id="@+id/phone_number_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/phone_number_form"
-                    android:layout_alignBottom="@+id/phone_number_form"
+                    android:layout_alignBaseline="@id/phone_number_form"
+                    android:layout_alignBottom="@id/phone_number_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/phone_number_form"
                     android:text="@string/phone_number"
@@ -124,8 +125,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
                     android:id="@+id/phone_number_form"
-                    android:layout_below="@+id/email_form"
-                    android:layout_toEndOf="@+id/phone_number_info"
+                    android:layout_below="@id/email_form"
+                    android:layout_toEndOf="@id/phone_number_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="phone"/>
 
@@ -133,8 +134,8 @@
                     android:id="@+id/city_name_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/city_name_form"
-                    android:layout_alignBottom="@+id/city_name_form"
+                    android:layout_alignBaseline="@id/city_name_form"
+                    android:layout_alignBottom="@id/city_name_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/city_name_form"
                     android:text="@string/city_name"
@@ -144,8 +145,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
                     android:id="@+id/city_name_form"
-                    android:layout_below="@+id/phone_number_form"
-                    android:layout_toEndOf="@+id/city_name_info"
+                    android:layout_below="@id/phone_number_form"
+                    android:layout_toEndOf="@id/city_name_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="text"/>
 
@@ -153,8 +154,8 @@
                     android:id="@+id/street_name_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/street_name_form"
-                    android:layout_alignBottom="@+id/street_name_form"
+                    android:layout_alignBaseline="@id/street_name_form"
+                    android:layout_alignBottom="@id/street_name_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/street_name_form"
                     android:text="@string/street_name"
@@ -164,8 +165,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
                     android:id="@+id/street_name_form"
-                    android:layout_below="@+id/city_name_form"
-                    android:layout_toEndOf="@+id/street_name_info"
+                    android:layout_below="@id/city_name_form"
+                    android:layout_toEndOf="@id/street_name_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="text"/>
 
@@ -173,8 +174,8 @@
                     android:id="@+id/build_num_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/build_num_form"
-                    android:layout_alignBottom="@+id/build_num_form"
+                    android:layout_alignBaseline="@id/build_num_form"
+                    android:layout_alignBottom="@id/build_num_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/build_num_form"
                     android:text="@string/build_number"
@@ -184,8 +185,8 @@
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
                     android:id="@+id/build_num_form"
-                    android:layout_below="@+id/street_name_form"
-                    android:layout_toEndOf="@+id/build_num_info"
+                    android:layout_below="@id/street_name_form"
+                    android:layout_toEndOf="@id/build_num_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="text"/>
 
@@ -193,8 +194,8 @@
                     android:id="@+id/apt_num_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/apt_num_form"
-                    android:layout_alignBottom="@+id/apt_num_form"
+                    android:layout_alignBaseline="@id/apt_num_form"
+                    android:layout_alignBottom="@id/apt_num_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/apt_num_form"
                     android:text="@string/apt_number"
@@ -203,8 +204,8 @@
                 <EditText android:layout_height="wrap_content"
                     android:layout_width="316dp"
                     android:id="@+id/apt_num_form"
-                    android:layout_below="@+id/build_num_form"
-                    android:layout_toEndOf="@+id/apt_num_info"
+                    android:layout_below="@id/build_num_form"
+                    android:layout_toEndOf="@id/apt_num_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="text"/>
 
@@ -212,8 +213,8 @@
                     android:id="@+id/zip_code_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/zip_code_form"
-                    android:layout_alignBottom="@+id/zip_code_form"
+                    android:layout_alignBaseline="@id/zip_code_form"
+                    android:layout_alignBottom="@id/zip_code_form"
                     android:layout_alignParentStart="true"
                     android:labelFor="@id/zip_code_form"
                     android:text="@string/zip_code"
@@ -223,48 +224,48 @@
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
                     android:id="@+id/zip_code_form"
-                    android:layout_below="@+id/apt_num_form"
-                    android:layout_toEndOf="@+id/zip_code_info"
+                    android:layout_below="@id/apt_num_form"
+                    android:layout_toEndOf="@id/zip_code_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="text"/>
 
                 <TextView
-                    android:id="@+id/passwd_info"
+                    android:id="@+id/passwordd_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/passwd_form"
-                    android:layout_alignBottom="@+id/passwd_form"
+                    android:layout_alignBaseline="@id/password_form"
+                    android:layout_alignBottom="@id/password_form"
                     android:layout_alignParentStart="true"
-                    android:labelFor="@id/passwd_form"
+                    android:labelFor="@id/password_form"
                     android:text="@string/password"
                     android:textSize="18sp" />
 
                 <EditText
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
-                    android:id="@+id/passwd_form"
-                    android:layout_below="@+id/zip_code_form"
-                    android:layout_toEndOf="@+id/passwd_info"
+                    android:id="@+id/password_form"
+                    android:layout_below="@id/zip_code_form"
+                    android:layout_toEndOf="@id/passwordd_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="textPassword"/>
 
                 <TextView
-                    android:id="@+id/conf_passwd_info"
+                    android:id="@+id/conf_password_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@+id/conf_passwd_form"
-                    android:layout_alignBottom="@+id/conf_passwd_form"
+                    android:layout_alignBaseline="@id/conf_password_form"
+                    android:layout_alignBottom="@id/conf_password_form"
                     android:layout_alignParentStart="true"
-                    android:labelFor="@id/conf_passwd_form"
-                    android:text="@string/conf_passwd"
+                    android:labelFor="@id/conf_password_form"
+                    android:text="@string/conf_password"
                     android:textSize="18sp" />
 
                 <EditText
                     android:layout_height="wrap_content"
                     android:layout_width="316dp"
-                    android:id="@+id/conf_passwd_form"
-                    android:layout_below="@+id/passwd_form"
-                    android:layout_toEndOf="@+id/conf_passwd_info"
+                    android:id="@+id/conf_password_form"
+                    android:layout_below="@id/password_form"
+                    android:layout_toEndOf="@id/conf_password_info"
                     android:layout_alignParentEnd="true"
                     android:inputType="textPassword"/>
 
@@ -272,7 +273,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="horizontal"
-                    android:layout_below="@id/conf_passwd_info">
+                    android:layout_below="@id/conf_password_info">
 
                     <Button
                         android:id="@+id/cancel_action"
@@ -285,7 +286,7 @@
                          />
 
                     <Button
-                        android:id="@+id/save_button"
+                        android:id="@+id/create_account_button"
                         style="@android:style/Widget.Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
