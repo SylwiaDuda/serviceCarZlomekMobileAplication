@@ -23,9 +23,8 @@
     <string name="registration">Rejestracja</string>
     <string name="remind_password">Przyomnij hasło</string>
     <string name="new_account">Nowe konto</string>
-    
-    
-    
+
+
     <string name="name">Imię:</string>
     <string name="surname">Nazwisko:</string>
     <string name="phone_number">Tel:</string>
@@ -46,6 +45,8 @@
     <string name="error_email_NOT_EXIST">Konto o podanym e-mail nie istnieje!</string>
     <string name="log_out">Wyloguj się</string>
     <string name="error_email_EXIST">Konto o podanym email już istnieje!</string>
+    <string name="your_profile">Twój profil</string>
+    <string name="car">Samochody</string>
 
 </resources>
 
