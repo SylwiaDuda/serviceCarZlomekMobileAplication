@@ -1,16 +1,30 @@
-package com.example.sylwi.servicecarzlomekmobileaplication.menuManager;
+package com.example.sylwi.servicecarzlomekmobileaplication.activityManager;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.activity.MainActivity;
+import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
 /**
  * Created by sylwi on 11.11.2018.
  */
 
-public class MenuManager extends AppCompatActivity {
+public abstract class ActivityManager extends AppCompatActivity {
+
+    private static String globalToken = null;
+
+    public static String getGlobalToken() {
+        return globalToken;
+    }
+
+    public static void setGlobalToken(String globalToken) {
+        ActivityManager.globalToken = globalToken;
+    }
+
     @Override
     public boolean onCreateOptionsMenu(android.view.Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -35,8 +49,12 @@ public class MenuManager extends AppCompatActivity {
     {
         return true;
     }
-    public void goToActivity(Class<?> newActivity){
+
+    public void goToActivity(String token, Class<?> newActivity){
+        String activityClassName = getClass().getSimpleName();
         Intent intent = new Intent(this,newActivity);
+        intent.putExtra("CLASSNAME",activityClassName);
+        intent.putExtra("TOKEN",token);
         startActivity(intent);
     };
 }

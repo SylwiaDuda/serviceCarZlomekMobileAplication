@@ -1,27 +1,38 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
+import android.content.Context;
 import android.content.Intent;
-import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
-import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForLoggedIn;
-import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForNotLoggedIn;
+import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
-public class MainActivity extends MenuForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.Objects;
 
-    private String token;
+public class MainActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
+
+    private static Response response;
+
+    public static Response getResponse() {
+        return response;
+    }
+
+    public static void setResponse(Response response) {
+        MainActivity.response = response;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -34,10 +45,19 @@ public class MainActivity extends MenuForLoggedIn implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-       // Intent intent = getIntent();
-       // Bundle bundle = intent.getExtras();
-//        Parcelable parcelable = bundle.getParcelable("RESPONSE");
-        //Response dataResponseFromPreviousActivity = (Response) parcelable;
+        Intent intent= getIntent();
+        String previousActivityName = intent.getStringExtra("CLASSNAME");
+        String token = intent.getStringExtra("TOKEN");
+        setGlobalToken(token);
+        switch (previousActivityName){
+            case "LoginActivity":
+                //response=LoginActivity.getResponse();
+                break;
+            default:
+                break;
+        }
+        //response=LoginActivity.getResponse();
+        //Log.d("OOOOOOOOOOOOOOOOOOOOOO", response.getStringValue("accessToken"));
 
     }
 
@@ -75,5 +95,4 @@ public class MainActivity extends MenuForLoggedIn implements NavigationView.OnNa
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
 }

@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -26,6 +25,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -39,7 +39,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForNotLoggedIn;
+import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForNotLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.FocusChangeListenerValidateSignInForm;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.NetworkConnection;
@@ -48,6 +48,7 @@ import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
+import com.google.gson.stream.JsonReader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 /**
  * A login screen that offers login via email/password.
  */
-public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener  {
+public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener{
 
     /**
      * Id to identity READ_CONTACTS permission request.
@@ -79,6 +80,7 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
     private UserLoginTask mAuthTask = null;
     private CheckEmailTask mCheckEmailTask = null;
     private Response response=null;
+
     // UI references.
     //private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mEmailView;
@@ -86,6 +88,7 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
     private View mProgressView;
     private View mLoginFormView;
     private boolean activeSerwer = true;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -371,8 +374,6 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
 
         mEmailView.setAdapter(adapter);
     }
-
-
     private interface ProfileQuery {
         String[] PROJECTION = {
                 ContactsContract.CommonDataKinds.Email.ADDRESS,
@@ -457,6 +458,7 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();
+
                 Log.d("SignIn response status:", String.valueOf(status));
                 return status;
             }else{
@@ -469,9 +471,11 @@ public class LoginActivity extends MenuForNotLoggedIn implements LoaderCallbacks
             mAuthTask = null;
             switch (status) {
                 case 200:
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                   // intent.putExtra("RESPONSE", (Parcelable) response);
-                    startActivity(intent);
+                    String token = response.getToken();
+                    setGlobalToken(token);
+                    Log.d("tokenin Login Activity","tttttttttttttttttttttttt");
+                    Log.d("tokenin Login Activity",token);
+                    goToActivity(token,MainActivity.class);
                     break;
                 case 401:
                     showProgress(false);

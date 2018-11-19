@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Build;
-import android.os.Parcelable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -26,17 +25,16 @@ import android.widget.Toast;
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.NetworkConnection;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidateForm;
-import com.example.sylwi.servicecarzlomekmobileaplication.menuManager.MenuForNotLoggedIn;
+import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForNotLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.RegistrationModel;
-import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class RegistrationActivity extends MenuForNotLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
+public class RegistrationActivity extends ActivityForNotLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
     private EditText firstNameView;
     private EditText lastNameView;
@@ -505,12 +503,12 @@ public class RegistrationActivity extends MenuForNotLoggedIn implements Navigati
             switch (status) {
                 case 200:
                     Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                   // intent.putExtra("RESPONSE", (Parcelable) response);
+                    //intent.putExtra("RESPONSE", (Parcelable) response);
                     startActivity(intent);
                     break;
                 case 401:
                     showProgress(false);
-                   // mPasswordView.setError(getString(R.string.error_incorrect_password));
+                   // mPasswordView.setError(getStringValue(R.string.error_incorrect_password));
                    // mPasswordView.requestFocus();
                     break;
                 case 400:

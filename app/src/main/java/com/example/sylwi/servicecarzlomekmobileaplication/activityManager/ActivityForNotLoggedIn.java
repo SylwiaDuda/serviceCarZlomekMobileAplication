@@ -1,28 +1,29 @@
-package com.example.sylwi.servicecarzlomekmobileaplication.menuManager;
+package com.example.sylwi.servicecarzlomekmobileaplication.activityManager;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.view.MenuItem;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.LoginActivity;
-import com.example.sylwi.servicecarzlomekmobileaplication.activity.MainActivity;
+import com.example.sylwi.servicecarzlomekmobileaplication.activity.RegistrationActivity;
 
 /**
  * Created by sylwi on 11.11.2018.
  */
 
-public class MenuForLoggedIn extends MenuManager {
+public class ActivityForNotLoggedIn extends ActivityManager {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        if (id == R.id.action_log_out) {
-            goToActivity(LoginActivity.class);
+        if (id == R.id.action_sign_in) {
+            goToActivity(null,LoginActivity.class);
             return true;
         }
-
+        if (id == R.id.action_register) {
+            goToActivity(null,RegistrationActivity.class);
+            return true;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -30,12 +31,16 @@ public class MenuForLoggedIn extends MenuManager {
     public boolean onPrepareOptionsMenu(android.view.Menu menu)
     {
         MenuItem signIn = menu.findItem(R.id.action_sign_in);
-        signIn.setVisible(false);
+        signIn.setVisible(true);
         MenuItem register = menu.findItem(R.id.action_register);
-        register.setVisible(false);
+        register.setVisible(true);
         MenuItem logOut = menu.findItem(R.id.action_log_out);
-        logOut.setVisible(true);
+        logOut.setVisible(false);
+        MenuItem clientProfile =  menu.findItem(R.id.action_check_your_profil);
+        clientProfile.setVisible(true);
         return true;
     }
+
+
 
 }

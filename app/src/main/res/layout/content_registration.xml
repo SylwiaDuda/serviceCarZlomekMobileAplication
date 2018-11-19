@@ -63,12 +63,11 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
                     android:id="@+id/first_name_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_toEndOf="@+id/first_name_info"
-                    android:inputType="textPersonName"
-                    />
+                    android:inputType="textPersonName" />
 
                 <TextView
                     android:id="@+id/last_name_info"
@@ -82,13 +81,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
                     android:id="@+id/last_name_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/first_name_form"
                     android:layout_toEndOf="@id/last_name_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="textPersonName"/>
+                    android:inputType="textPersonName" />
 
                 <TextView
                     android:id="@+id/email_info"
@@ -102,13 +101,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="match_parent"
                     android:id="@+id/email_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/last_name_form"
                     android:layout_toEndOf="@id/email_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="textEmailAddress"/>
+                    android:inputType="textEmailAddress" />
 
                 <TextView
                     android:id="@+id/phone_number_info"
@@ -122,13 +121,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/phone_number_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/email_form"
                     android:layout_toEndOf="@id/phone_number_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="phone"/>
+                    android:inputType="phone" />
 
                 <TextView
                     android:id="@+id/city_name_info"
@@ -142,13 +141,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/city_name_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/phone_number_form"
                     android:layout_toEndOf="@id/city_name_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/street_name_info"
@@ -162,13 +161,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/street_name_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/city_name_form"
                     android:layout_toEndOf="@id/street_name_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/build_num_info"
@@ -182,13 +181,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/build_num_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/street_name_form"
                     android:layout_toEndOf="@id/build_num_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/apt_num_info"
@@ -201,13 +200,14 @@
                     android:text="@string/apt_number"
                     android:textSize="18sp" />
 
-                <EditText android:layout_height="wrap_content"
-                    android:layout_width="316dp"
+                <EditText
                     android:id="@+id/apt_num_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/build_num_form"
                     android:layout_toEndOf="@id/apt_num_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/zip_code_info"
@@ -221,13 +221,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/zip_code_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/apt_num_form"
                     android:layout_toEndOf="@id/zip_code_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="text"/>
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/passwordd_info"
@@ -241,13 +241,13 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/password_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/zip_code_form"
                     android:layout_toEndOf="@id/passwordd_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
 
                 <TextView
                     android:id="@+id/conf_password_info"
@@ -261,29 +261,29 @@
                     android:textSize="18sp" />
 
                 <EditText
-                    android:layout_height="wrap_content"
-                    android:layout_width="316dp"
                     android:id="@+id/conf_password_form"
+                    android:layout_width="316dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_below="@id/password_form"
                     android:layout_toEndOf="@id/conf_password_info"
-                    android:layout_alignParentEnd="true"
-                    android:inputType="textPassword"/>
+                    android:inputType="textPassword" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    android:layout_below="@id/conf_password_info">
+                    android:layout_below="@id/conf_password_info"
+                    android:orientation="horizontal">
 
                     <Button
                         android:id="@+id/cancel_action"
+                        style="@android:style/Widget.Button"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:text="@string/cancel"
-                        style="@android:style/Widget.Button"
 
-                         />
+                        />
 
                     <Button
                         android:id="@+id/create_account_button"
@@ -296,7 +296,6 @@
                         android:textStyle="bold" />
 
                 </LinearLayout>
-
 
 
             </RelativeLayout>
