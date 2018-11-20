@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:context="com.example.sylwi.servicecarzlomekmobileaplication.activity.CarsActivity">
+    tools:context="com.example.sylwi.servicecarzlomekmobileaplication.activity.DataClientActivity">
 
     <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
@@ -22,6 +22,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <include layout="@layout/content_cars" />
+    <include layout="@layout/content_data_client" />
 
 </android.support.design.widget.CoordinatorLayout>

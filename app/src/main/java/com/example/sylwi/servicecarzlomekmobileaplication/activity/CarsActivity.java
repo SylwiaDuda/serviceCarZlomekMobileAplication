@@ -14,7 +14,9 @@ import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AbsListView;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
@@ -35,6 +37,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
     private ListView carListView;
     private List <Car>carsList;
     private Context mContext;
+    private Button buttonAddCar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,14 +47,12 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
         setSupportActionBar(toolbar);
         mContext = getApplicationContext();
         Intent intent = getIntent();
-        Log.d("extra in car:", intent.getExtras().getString("TOKEN"));
         setGlobalToken(intent.getExtras().getString("TOKEN"));
-        Log.d("tttttttt:", getGlobalToken());
         ip=getString(R.string.ip);
         mGetCarsTask = new GetCarsTask(getGlobalToken());
         mGetCarsTask.execute((Void) null);
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_client_car);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_cars);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
@@ -103,11 +104,18 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
 
             }
         });
+        buttonAddCar = (Button) findViewById(R.id.button_add_car);
+        buttonAddCar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToActivity(getGlobalToken(),AddCarActivity.class);
+            }
+        });
     }
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_client_car);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_cars);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
@@ -135,7 +143,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
 
         }
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_client_car);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_cars);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }

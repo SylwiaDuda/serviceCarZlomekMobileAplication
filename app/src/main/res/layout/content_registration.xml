@@ -273,7 +273,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/conf_password_info"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:paddingTop="@dimen/activity_vertical_margin">
 
                     <Button
                         android:id="@+id/cancel_action"

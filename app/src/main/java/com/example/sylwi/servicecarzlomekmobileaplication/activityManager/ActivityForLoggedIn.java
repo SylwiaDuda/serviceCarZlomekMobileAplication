@@ -4,6 +4,7 @@ import android.view.MenuItem;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.CarsActivity;
+import com.example.sylwi.servicecarzlomekmobileaplication.activity.DataClientActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.LoginActivity;
 
 /**
@@ -16,6 +17,10 @@ public class ActivityForLoggedIn extends ActivityManager {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if(id == R.id.action_check_your_profil){
+            goToActivity(getGlobalToken(),DataClientActivity.class);
+            return true;
+        }
         if(id == R.id.action_car){
             goToActivity(getGlobalToken(),CarsActivity.class);
             return true;

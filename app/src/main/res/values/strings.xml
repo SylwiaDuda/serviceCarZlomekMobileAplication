@@ -45,8 +45,16 @@
     <string name="error_email_NOT_EXIST">Konto o podanym e-mail nie istnieje!</string>
     <string name="log_out">Wyloguj się</string>
     <string name="error_email_EXIST">Konto o podanym email już istnieje!</string>
-    <string name="your_profile">Twój profil</string>
+    <string name="your_profile">Twoje konto</string>
     <string name="car">Samochody</string>
+    <string name="add_car">Dodaj samochód</string>
+    <string name="add_car_info">Dodawanie samochodu</string>
+    <string name="brand">Marka:</string>
+    <string name="model">Model:</string>
+    <string name="registration_number">Nr rejestracyjny:</string>
+    <string name="production_year">Rok produkcji:</string>
+    <string name="vin_number">Numer VIN:</string>
+    <string name="data_client_info">Twoje dane</string>
 
 </resources>
 
