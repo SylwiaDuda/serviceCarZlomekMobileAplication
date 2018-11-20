@@ -6,6 +6,7 @@ import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.CarsActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.DataClientActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.LoginActivity;
+import com.example.sylwi.servicecarzlomekmobileaplication.activity.VisitsActivity;
 
 /**
  * Created by sylwi on 11.11.2018.
@@ -23,6 +24,10 @@ public class ActivityForLoggedIn extends ActivityManager {
         }
         if(id == R.id.action_car){
             goToActivity(getGlobalToken(),CarsActivity.class);
+            return true;
+        }
+        if(id == R.id.action_visits){
+            goToActivity(getGlobalToken(),VisitsActivity.class);
             return true;
         }
         if (id == R.id.action_log_out) {
