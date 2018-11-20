@@ -37,10 +37,11 @@ public class ActivityForNotLoggedIn extends ActivityManager {
         MenuItem logOut = menu.findItem(R.id.action_log_out);
         logOut.setVisible(false);
         MenuItem clientProfile =  menu.findItem(R.id.action_check_your_profil);
-        clientProfile.setVisible(true);
+        clientProfile.setVisible(false);
+        MenuItem clientCar =  menu.findItem(R.id.action_car);
+        clientCar.setVisible(false);
+        MenuItem clientVisits =  menu.findItem(R.id.action_visits);
+        clientVisits.setVisible(false);
         return true;
     }
-
-
-
 }

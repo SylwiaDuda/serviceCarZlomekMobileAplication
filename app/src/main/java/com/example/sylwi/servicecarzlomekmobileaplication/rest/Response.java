@@ -1,17 +1,16 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.rest;
 
 import android.util.Log;
-
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Car;
+import com.example.sylwi.servicecarzlomekmobileaplication.model.Client;
 import com.google.gson.stream.JsonReader;
 import java.io.IOException;
-
 import java.io.InputStream;
-
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by sylwi on 12.11.2018.
@@ -63,20 +62,14 @@ public class Response {
         String stringValue = null;
         if(jsonReader!=null){
             try {
-                Log.d("peeeeeeek",jsonReader.peek().toString());
-                jsonReader.beginObject(); // Start processing the JSON object
-                while (jsonReader.hasNext()) { // Loop through all keys
-                    String key = jsonReader.nextName(); // Fetch the next key
-                    if (key.equals("accessToken")) { // Check if desired key
-                        // Fetch the value as a String
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String key = jsonReader.nextName();
+                    if (key.equals("accessToken")) {
                         stringValue= jsonReader.nextString();
-
-                        // Do something with the value
-                        // ...
-
-                        break; // Break out of the loop
+                        break;
                     } else {
-                        jsonReader.skipValue(); // Skip values of other keys
+                        jsonReader.skipValue();
                     }
                 }
                 jsonReader.close();
@@ -85,7 +78,7 @@ public class Response {
             }
         }
         return stringValue;
-   }
+    }
     public List<Car> getCarList(){
         JsonReader jsonReader= getJsonReader(inputStream);
         List<Car> carlist = null;
@@ -121,10 +114,6 @@ public class Response {
                                 }
                             }
                             carlist.add(car);
-                            carlist.add(car);
-                            carlist.add(car);
-                            carlist.add(car);
-
                             jsonReader.endObject();
                         }
                         jsonReader.endArray();
@@ -141,6 +130,43 @@ public class Response {
         }
         return carlist;
     }
-
+    public Client getDataClient(){
+        JsonReader jsonReader= getJsonReader(inputStream);
+        Client client = null;
+        if(jsonReader!=null){
+            client=new Client();
+            try {
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String key = jsonReader.nextName();
+                    if (key.equals("firstName")) {
+                         client.setFirstName(jsonReader.nextString());
+                    }else if (key.equals("lastName")) {
+                        client.setLastName(jsonReader.nextString());
+                    }else  if (key.equals("email")) {
+                        client.setEmail(jsonReader.nextString());
+                    }else if (key.equals("phoneNumber")) {
+                        client.setPhoneNumber(jsonReader.nextString());
+                    }else if (key.equals("cityName")) {
+                        client.setCityName(jsonReader.nextString());
+                    }else  if (key.equals("streetName")) {
+                        client.setStreetName(jsonReader.nextString());
+                    }else if (key.equals("buildNum")) {
+                        client.setBuildNum(jsonReader.nextString());
+                    }else if (key.equals("aptNum")) {
+                        client.setAptNum(jsonReader.nextString());
+                    }else if (key.equals("zipCode")) {
+                        client.setZipCode(jsonReader.nextString());
+                    }else {
+                        jsonReader.skipValue();
+                    }
+                }
+                jsonReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return client;
+    }
 
 }

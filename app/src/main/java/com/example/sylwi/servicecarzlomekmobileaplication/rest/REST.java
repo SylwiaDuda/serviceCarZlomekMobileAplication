@@ -2,12 +2,14 @@ package com.example.sylwi.servicecarzlomekmobileaplication.rest;
 
 
 import android.util.Log;
-
-import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.google.gson.Gson;
+
+import org.apache.http.HttpResponse;
+
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;

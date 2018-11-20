@@ -48,7 +48,7 @@ import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.SignInModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
-import com.google.gson.stream.JsonReader;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -473,8 +473,7 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
                 case 200:
                     String token = response.getToken();
                     setGlobalToken(token);
-                    Log.d("tokenin Login Activity","tttttttttttttttttttttttt");
-                    Log.d("tokenin Login Activity",token);
+                    Log.d("accesstoken:",token);
                     goToActivity(token,MainActivity.class);
                     break;
                 case 401:

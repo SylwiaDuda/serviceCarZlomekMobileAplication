@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/add_car"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin_bottom"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.example.sylwi.servicecarzlomekmobileaplication.activity.AddCarActivity"
+    tools:showIn="@layout/app_bar_add_car">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <TextView
+            android:id="@+id/add_car_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/abril_fatface"
+            android:text="@string/add_car_info"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp" />
+
+        <ProgressBar
+            android:id="@+id/add_car_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone" />
+        <ScrollView
+            android:id ="@+id/car_add_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/brand_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/brand_form"
+                    android:layout_alignBottom="@id/brand_form"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/brand_form"
+                    android:text="@string/brand"
+                    android:textSize="18sp"/>
+
+                <EditText
+                    android:id="@+id/brand_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/brand_info"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/model_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/model_form"
+                    android:layout_alignBottom="@id/model_form"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/model_form"
+                    android:text="@string/model"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/model_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/brand_form"
+                    android:layout_toEndOf="@id/model_info"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/registration_number_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/registration_number_form"
+                    android:layout_alignBottom="@id/registration_number_form"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/registration_number_form"
+                    android:text="@string/registration_number"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/registration_number_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/model_form"
+                    android:layout_toEndOf="@id/registration_number_info"
+                    android:inputType="textPersonName" />
+
+                <TextView
+                    android:id="@+id/production_year_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/production_year_form"
+                    android:layout_alignBottom="@id/production_year_form"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/production_year_form"
+                    android:text="@string/production_year"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/production_year_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/registration_number_form"
+                    android:layout_toEndOf="@id/production_year_info"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/vin_number_info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/vin_number_form"
+                    android:layout_alignBottom="@id/vin_number_form"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/vin_number_form"
+                    android:text="@string/vin_number"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/vin_number_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/production_year_form"
+                    android:layout_toEndOf="@id/vin_number_info"
+                    android:inputType="textPersonName" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/vin_number_form"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/cancel_button"
+                        style="@android:style/Widget.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/cancel"
+
+                        />
+
+                    <Button
+                        android:id="@+id/add_car_button"
+                        style="@android:style/Widget.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/add_car"
+
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
+</RelativeLayout>
+
+
+
+
+
+
+
+
+
+
