@@ -3,11 +3,6 @@ package com.example.sylwi.servicecarzlomekmobileaplication.rest;
 
 import android.util.Log;
 import com.google.gson.Gson;
-
-import org.apache.http.HttpResponse;
-
-import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +11,6 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-
 /**
  * Created by sylwi on 12.11.2018.
  */
@@ -72,5 +66,10 @@ public class REST {
                 httpURLConnection.disconnect();
         }
         return response;
+    }
+    public void test(){
+
+
+
     }
 }

@@ -21,7 +21,6 @@ import java.util.Objects;
 
 public class AddCarActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
-    private String token;
     private static Response response;
     private Button buttonCancel;
 
@@ -41,14 +40,11 @@ public class AddCarActivity extends ActivityForLoggedIn implements NavigationVie
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Intent intent = getIntent();
-        token = intent.getExtras().getString("TOKEN");
-        setGlobalToken(token);
         buttonCancel = (Button)findViewById(R.id.cancel_button);
         buttonCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToActivity(token, CarsActivity.class);
+                goToActivity(CarsActivity.class);
             }
         });
 

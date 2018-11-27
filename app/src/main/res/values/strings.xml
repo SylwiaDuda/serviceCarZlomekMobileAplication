@@ -55,6 +55,12 @@
     <string name="production_year">Rok produkcji:</string>
     <string name="vin_number">Numer VIN:</string>
     <string name="data_client_info">Twoje dane</string>
+    <string name="save">Zapisz</string>
+    <string name="edit_data">Edycja danych</string>
+    <string name="last_password">Poprzednie hasło:</string>
+    <string name="change_password">Zmień hasło</string>
+    <string name="new_password">Nowe hasło:</string>
+    <string name="change_password_info">Zmiana hasła</string>
 
 </resources>
 

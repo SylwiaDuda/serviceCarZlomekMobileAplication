@@ -23,6 +23,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.NetworkConnection;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidateForm;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForNotLoggedIn;
@@ -36,17 +37,17 @@ import java.util.regex.Pattern;
 
 public class RegistrationActivity extends ActivityForNotLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
-    private EditText firstNameView;
-    private EditText lastNameView;
-    private EditText emailView;
-    private EditText phoneNumberView;
-    private EditText cityNameView;
-    private EditText streetNameView;
-    private EditText buildNumView;
-    private EditText aptNumView;
-    private EditText zipCodeView;
-    private EditText passwordView;
-    private EditText confirmPasswordView;
+    private EditText firstNameET;
+    private EditText lastNameET;
+    private EditText emailET;
+    private EditText phoneNumberET;
+    private EditText cityNameET;
+    private EditText streetNameET;
+    private EditText buildNumET;
+    private EditText aptNumET;
+    private EditText zipCodeET;
+    private EditText passwordET;
+    private EditText confirmPasswordET;
     private Button createAccountButton;
     private Button cancelButton;
 
@@ -78,28 +79,28 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
 
         mContext = getApplicationContext();
         ip = getString(R.string.ip);
-        firstNameView = (EditText) findViewById(R.id.first_name_form);
-        firstNameView.addTextChangedListener(new TextWatcherValidateForm(firstNameView,mContext));
-        lastNameView = (EditText) findViewById(R.id.last_name_form);
-        lastNameView.addTextChangedListener(new TextWatcherValidateForm(lastNameView,mContext));
-        emailView = (EditText) findViewById(R.id.email_form);
-        emailView.addTextChangedListener(new TextWatcherValidateForm(emailView,mContext));
-        phoneNumberView = (EditText) findViewById(R.id.phone_number_form);
-        phoneNumberView.addTextChangedListener(new TextWatcherValidateForm(phoneNumberView,mContext));
-        cityNameView = (EditText) findViewById(R.id.city_name_form);
-        cityNameView.addTextChangedListener(new TextWatcherValidateForm(cityNameView,mContext));
-        streetNameView = (EditText) findViewById(R.id.street_name_form);
-        streetNameView.addTextChangedListener(new TextWatcherValidateForm(streetNameView,mContext));
-        buildNumView = (EditText) findViewById(R.id.build_num_form);
-        buildNumView.addTextChangedListener(new TextWatcherValidateForm(buildNumView,mContext));
-        aptNumView = (EditText) findViewById(R.id.apt_num_form);
-        aptNumView.addTextChangedListener(new TextWatcherValidateForm(aptNumView,mContext));
-        zipCodeView = (EditText) findViewById(R.id.zip_code_form);
-        zipCodeView.addTextChangedListener(new TextWatcherValidateForm(zipCodeView,mContext));
-        passwordView = (EditText) findViewById(R.id.password_form);
-        passwordView.addTextChangedListener(new TextWatcherValidateForm(passwordView,mContext));
-        confirmPasswordView = (EditText) findViewById(R.id.conf_password_form);
-        confirmPasswordView.addTextChangedListener(new TextWatcherValidateForm(confirmPasswordView,mContext));
+        firstNameET = (EditText) findViewById(R.id.first_name_form);
+        firstNameET.addTextChangedListener(new TextWatcherValidateForm(firstNameET,mContext));
+        lastNameET = (EditText) findViewById(R.id.last_name_form);
+        lastNameET.addTextChangedListener(new TextWatcherValidateForm(lastNameET,mContext));
+        emailET = (EditText) findViewById(R.id.email_form);
+        emailET.addTextChangedListener(new TextWatcherValidateForm(emailET,mContext));
+        phoneNumberET = (EditText) findViewById(R.id.phone_number_form);
+        phoneNumberET.addTextChangedListener(new TextWatcherValidateForm(phoneNumberET,mContext));
+        cityNameET = (EditText) findViewById(R.id.city_name_form);
+        cityNameET.addTextChangedListener(new TextWatcherValidateForm(cityNameET,mContext));
+        streetNameET = (EditText) findViewById(R.id.street_name_form);
+        streetNameET.addTextChangedListener(new TextWatcherValidateForm(streetNameET,mContext));
+        buildNumET = (EditText) findViewById(R.id.build_num_form);
+        buildNumET.addTextChangedListener(new TextWatcherValidateForm(buildNumET,mContext));
+        aptNumET = (EditText) findViewById(R.id.apt_num_form);
+        aptNumET.addTextChangedListener(new TextWatcherValidateForm(aptNumET,mContext));
+        zipCodeET = (EditText) findViewById(R.id.zip_code_form);
+        zipCodeET.addTextChangedListener(new TextWatcherValidateForm(zipCodeET,mContext));
+        passwordET = (EditText) findViewById(R.id.password_form);
+        passwordET.addTextChangedListener(new TextWatcherValidateForm(passwordET,mContext));
+        confirmPasswordET = (EditText) findViewById(R.id.conf_password_form);
+        confirmPasswordET.addTextChangedListener(new TextWatcherValidateForm(confirmPasswordET,mContext));
 
         createAccountButton = (Button) findViewById(R.id.create_account_button);
         createAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -219,17 +220,17 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
             if (cancel) {
                 //focusView.requestFocus();
             } else {
-                String firstName = firstNameView.getText().toString();
-                String lastName = lastNameView.getText().toString();
-                String email = emailView.getText().toString();
-                String phoneNumber = phoneNumberView.getText().toString();
-                String cityName = cityNameView.getText().toString();
-                String streetName = streetNameView.getText().toString();
-                String buildNum = buildNumView.getText().toString();
-                String aptNum = aptNumView.getText().toString();
-                String zipCode = zipCodeView.getText().toString();
-                String password = passwordView.getText().toString();
-                String confirmPassword = confirmPasswordView.getText().toString();
+                String firstName = firstNameET.getText().toString();
+                String lastName = lastNameET.getText().toString();
+                String email = emailET.getText().toString();
+                String phoneNumber = phoneNumberET.getText().toString();
+                String cityName = cityNameET.getText().toString();
+                String streetName = streetNameET.getText().toString();
+                String buildNum = buildNumET.getText().toString();
+                String aptNum = aptNumET.getText().toString();
+                String zipCode = zipCodeET.getText().toString();
+                String password = passwordET.getText().toString();
+                String confirmPassword = confirmPasswordET.getText().toString();
                 showProgress(true);
                 mCheckEmailTask = new CheckEmailTask(firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password,confirmPassword);
                 mCheckEmailTask.execute((Void) null);
@@ -239,17 +240,17 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
     }
 //------------------------------------------------------------------------------------------------------Validation
     public void validateRegistrationForm(){
-        validate(firstNameView);
-        validate(lastNameView);
-        validate(emailView);
-        validate(phoneNumberView);
-        validate(cityNameView);
-        validate(streetNameView);
-        validate(buildNumView);
-        validate(aptNumView);
-        validate(zipCodeView);
-        validate(passwordView);
-        validate(confirmPasswordView);
+        validate(firstNameET);
+        validate(lastNameET);
+        validate(emailET);
+        validate(phoneNumberET);
+        validate(cityNameET);
+        validate(streetNameET);
+        validate(buildNumET);
+        validate(aptNumET);
+        validate(zipCodeET);
+        validate(passwordET);
+        validate(confirmPasswordET);
     }
     public void validate(EditText editText){
         String text = editText.getText().toString();
@@ -342,7 +343,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
                     }
                     break;
                 case R.id.conf_password_form:
-                    String password = passwordView.getText().toString();
+                    String password = passwordET.getText().toString();
                     if(!TextUtils.isEmpty(password) && !text.equals(password)){
                         editText.setError("Wpisane hasła nie są identyczne");
                         cancel = true;
@@ -430,8 +431,8 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
             switch (status) {
                 case 200:
                     showProgress(false);
-                    emailView.setError(getString(R.string.error_email_EXIST));
-                    emailView.requestFocus();
+                    emailET.setError(getString(R.string.error_email_EXIST));
+                    emailET.requestFocus();
                     break;
                 case 400:
                     mRegistrationTask = new RegistrationTask(firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password,confirmPassword);
@@ -502,9 +503,12 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
             mRegistrationTask = null;
             switch (status) {
                 case 200:
-                    Intent intent = new Intent(RegistrationActivity.this, MainActivity.class);
-                    //intent.putExtra("RESPONSE", (Parcelable) response);
-                    startActivity(intent);
+                    InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
+                    internalStorageDirMnager.setToken(response.getToken(),mContext);
+                    internalStorageDirMnager.setKey(password,mContext);
+                    internalStorageDirMnager.setEmail(email,mContext);
+                    showToast();
+                    goToActivity(MainActivity.class);
                     break;
                 case 401:
                     showProgress(false);
@@ -535,5 +539,10 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
             mRegistrationTask = null;
             showProgress(false);
         }
+    }
+    public void showToast(){
+        String toastText = "Rejestracja powiodłą się!";
+        Toast toast = Toast.makeText(mContext, toastText, Toast.LENGTH_LONG);
+        toast.show();
     }
 }

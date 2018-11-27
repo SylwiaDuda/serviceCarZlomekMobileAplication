@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListCarsAdapter;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Car;
@@ -46,10 +47,10 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = getApplicationContext();
-        Intent intent = getIntent();
-        setGlobalToken(intent.getExtras().getString("TOKEN"));
         ip=getString(R.string.ip);
-        mGetCarsTask = new GetCarsTask(getGlobalToken());
+        InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
+        String token = internalStorageDirMnager.getToken(mContext);
+        mGetCarsTask = new GetCarsTask(token);
         mGetCarsTask.execute((Void) null);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_cars);
@@ -108,7 +109,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
         buttonAddCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                goToActivity(getGlobalToken(),AddCarActivity.class);
+                goToActivity(AddCarActivity.class);
             }
         });
     }
