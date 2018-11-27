@@ -38,7 +38,7 @@ public class REST {
         }
         return httpURLConnection;
     }
-    public Response request(String url, Object objectJSON) {
+    public Response requestWithMethodPOST(String url, Object objectJSON) {
         HttpURLConnection httpURLConnection = null;
         DataOutputStream dataOutputStream = null;
         InputStream inputStream =null;
@@ -67,9 +67,34 @@ public class REST {
         }
         return response;
     }
-    public void test(){
-
-
-
+    public Response requestWithMethodGET(String url) {
+        HttpURLConnection httpURLConnection = null;
+        DataOutputStream dataOutputStream = null;
+        InputStream inputStream =null;
+        response=null;
+        try {
+            httpURLConnection = getConnection(url);
+            httpURLConnection.setRequestMethod("GET");
+            //dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
+            //Gson gson = new Gson();
+            //dataOutputStream.writeBytes(gson.toJson(objectJSON));
+            ///dataOutputStream.flush();
+           // dataOutputStream.close();
+            response = new Response();
+            response.setResponseStatus(httpURLConnection.getResponseCode());
+            inputStream= httpURLConnection.getInputStream();
+            response.setInputStream(inputStream);
+            return response;
+        } catch (UnsupportedEncodingException e) {
+            Log.d("catch","UnsupportedEncodingException");
+            e.printStackTrace();
+        } catch (IOException e) {
+            Log.d("catch","IOException");
+            e.printStackTrace();
+        }finally {
+            if(httpURLConnection != null)
+                httpURLConnection.disconnect();
+            }
+        return response;
     }
 }

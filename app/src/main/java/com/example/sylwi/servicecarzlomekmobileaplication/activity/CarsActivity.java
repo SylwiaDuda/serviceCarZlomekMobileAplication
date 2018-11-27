@@ -1,7 +1,6 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -159,7 +158,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/car/getCarData",new TokenModel(mToken));
+            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/car/getCarData",new TokenModel(mToken));
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();

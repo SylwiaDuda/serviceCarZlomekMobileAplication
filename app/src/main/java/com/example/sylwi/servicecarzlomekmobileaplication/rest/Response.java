@@ -169,7 +169,7 @@ public class Response {
         }
         return client;
     }
-    public List<Visit> geteNewVisit(){
+    public List<Visit> getNewVisit(){
         JsonReader jsonReader= getJsonReader(inputStream);
         List visitList = null;
         Visit visit=null;
@@ -235,5 +235,35 @@ public class Response {
             }
         }
         return visitList;
+    }
+    public ArrayList<String> getCarBrands(){
+        JsonReader jsonReader= getJsonReader(inputStream);
+        ArrayList<String> brands = null;
+        if(jsonReader!=null){
+            try {
+                brands = new ArrayList<>();
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String key = jsonReader.nextName();
+                    if (key.equals("brandNames")) {
+                        jsonReader.beginArray();
+                        String innerName=null;
+                        while (jsonReader.hasNext()) {
+                            innerName = jsonReader.nextString();
+                            brands.add(innerName);
+                        }
+                        jsonReader.endArray();
+                    }
+                    else {
+                        jsonReader.skipValue();
+                    }
+                }
+                jsonReader.endObject();
+                jsonReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return brands;
     }
 }

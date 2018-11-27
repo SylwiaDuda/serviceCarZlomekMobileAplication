@@ -1,31 +1,21 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.ActionMode;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AbsListView;
-import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
-import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListCarsAdapter;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListVisitsAdapter;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
-import com.example.sylwi.servicecarzlomekmobileaplication.model.Car;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.TokenModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
@@ -158,7 +148,7 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits",new TokenModel(mToken));
+            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits",new TokenModel(mToken));
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();
@@ -174,7 +164,7 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
             mGetVisitTask= null;
             switch (status) {
                 case 200:
-                    visitList = response.geteNewVisit();
+                    visitList = response.getNewVisit();
                     Log.d("vvvvvvvvvvvv: ",visitList.toString());
 
                     ListVisitsAdapter adapter = new ListVisitsAdapter(mContext,R.layout.row_list_visits,visitList);

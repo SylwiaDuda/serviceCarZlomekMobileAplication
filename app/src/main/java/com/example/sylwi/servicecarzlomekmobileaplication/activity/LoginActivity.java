@@ -51,7 +51,6 @@ import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +62,7 @@ import static android.Manifest.permission.READ_CONTACTS;
 public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallbacks<Cursor>, NavigationView.OnNavigationItemSelectedListener{
 
     /**
-     * Id to identity READ_CONTACTS permission request.
+     * Id to identity READ_CONTACTS permission requestWithMethodPOST.
      */
     private static final int REQUEST_READ_CONTACTS = 0;
 
@@ -214,7 +213,7 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
     }
 
     /**
-     * Callback received when a permissions request has been completed.
+     * Callback received when a permissions requestWithMethodPOST has been completed.
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
@@ -399,7 +398,7 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
         @Override
         protected Integer doInBackground(Void... params) {
             REST checkEmail= new REST();
-            response = checkEmail.request("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail",new CheckEmailModel(mEmail));
+            response = checkEmail.requestWithMethodPOST("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail",new CheckEmailModel(mEmail));
             if(!(response==null)){
                 activeSerwer=true;
                 int status=response.getResponseStatus();
@@ -453,7 +452,7 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/authorization/signIn",new SignInModel(mEmail,mPassword));
+            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/signIn",new SignInModel(mEmail,mPassword));
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();

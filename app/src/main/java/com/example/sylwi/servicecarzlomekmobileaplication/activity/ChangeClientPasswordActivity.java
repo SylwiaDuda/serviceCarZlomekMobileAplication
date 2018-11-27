@@ -11,7 +11,6 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -32,7 +31,6 @@ import com.example.sylwi.servicecarzlomekmobileaplication.model.EditDataClientMo
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
-import java.sql.BatchUpdateException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -293,7 +291,7 @@ public class ChangeClientPasswordActivity extends ActivityForLoggedIn implements
         @Override
         protected Integer doInBackground(Void... params) {
             REST saveNewClientData= new REST();
-            response = saveNewClientData.request("http://"+ip+":8080/warsztatZlomek/rest/updateClient/editClientData",new EditDataClientModel(accessToken,firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password, confirmPassword));
+            response = saveNewClientData.requestWithMethodPOST("http://"+ip+":8080/warsztatZlomek/rest/updateClient/editClientData",new EditDataClientModel(accessToken,firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password, confirmPassword));
             if(!(response==null)){
                 serverIsActive =true;
                 int status=response.getResponseStatus();
