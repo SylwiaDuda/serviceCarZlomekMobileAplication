@@ -21,7 +21,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListCarsAdapter;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListVisitsAdapter;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Car;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.TokenModel;
@@ -34,8 +36,11 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
 
     private String ip;
     private boolean activeSerwer = true;
+    private GetVisitTask mGetVisitTask=null;
     private Response response = null;
     private Context mContext;
+    private ListView visitListView;
+    private List visitList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +49,7 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mContext = getApplicationContext();
-        Intent intent = getIntent();
-        setGlobalToken(intent.getExtras().getString("TOKEN"));
         ip = getString(R.string.ip);
-        //mGetCarsTask = new CarsActivity.GetCarsTask(getGlobalToken());
-        //mGetCarsTask.execute((Void) null);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_visits);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -58,6 +59,12 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        visitListView = (ListView)findViewById(R.id.visit_list);
+        InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
+        String token = internalStorageDirMnager.getToken(mContext);
+        mGetVisitTask = new GetVisitTask(token);
+        mGetVisitTask.execute((Void)null);
+
     }
         //carListView = (ListView)findViewById(R.id.car_list);
        // carListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
@@ -140,18 +147,18 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-  /*  public class GetCarsTask extends AsyncTask<Void, Void, Integer> {
+    public class GetVisitTask extends AsyncTask<Void, Void, Integer> {
 
         private final String mToken;
 
-        GetCarsTask(String token) {
+        GetVisitTask(String token) {
             mToken = token;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/car/getCarData",new TokenModel(mToken));
+            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits",new TokenModel(mToken));
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();
@@ -164,12 +171,14 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         }
         @Override
         protected void onPostExecute(final Integer status) {
-            mGetCarsTask= null;
+            mGetVisitTask= null;
             switch (status) {
                 case 200:
-                    carsList = response.getCarList();
-                    ListCarsAdapter adapter = new ListCarsAdapter(mContext,R.layout.row_list_cars,carsList);
-                    carListView.setAdapter(adapter);
+                    visitList = response.geteNewVisit();
+                    Log.d("vvvvvvvvvvvv: ",visitList.toString());
+
+                    ListVisitsAdapter adapter = new ListVisitsAdapter(mContext,R.layout.row_list_visits,visitList);
+                    visitListView.setAdapter(adapter);
                     break;
                 case 401:
                     //showProgress(false);
@@ -189,8 +198,8 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         }
         @Override
         protected void onCancelled() {
-            mGetCarsTask = null;
+            mGetVisitTask = null;
             //showProgress(false);
         }
-    }*/
+    }
 }

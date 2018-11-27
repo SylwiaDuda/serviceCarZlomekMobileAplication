@@ -39,6 +39,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForNotLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.FocusChangeListenerValidateSignInForm;
@@ -50,6 +51,7 @@ import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,7 +82,6 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
     private UserLoginTask mAuthTask = null;
     private CheckEmailTask mCheckEmailTask = null;
     private Response response=null;
-
     // UI references.
     //private AutoCompleteTextView mEmailView;
     private AutoCompleteTextView mEmailView;
@@ -101,8 +102,6 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
         loginLayout.getBackground().setAlpha(50);
         mContext = getApplicationContext();
         ip = getString(R.string.ip);
-        // Set up the login form.
-
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
         populateAutoComplete();
         mEmailView.setOnFocusChangeListener(new FocusChangeListenerValidateSignInForm(mEmailView, mContext));
@@ -472,9 +471,12 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
             switch (status) {
                 case 200:
                     String token = response.getToken();
-                    setGlobalToken(token);
-                    Log.d("accesstoken:",token);
-                    goToActivity(token,MainActivity.class);
+                    InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
+                    internalStorageDirMnager.setToken(token, mContext);
+                    internalStorageDirMnager.setEmail(mEmail,mContext);
+                    internalStorageDirMnager.setKey(mPassword,mContext);
+                    Log.d("accessToken",token);
+                    goToActivity(MainActivity.class);
                     break;
                 case 401:
                     showProgress(false);

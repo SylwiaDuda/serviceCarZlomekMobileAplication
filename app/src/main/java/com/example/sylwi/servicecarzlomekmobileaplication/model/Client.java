@@ -1,10 +1,13 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by sylwi on 20.11.2018.
  */
 
-public class Client {
+public class Client implements Parcelable{
 
     private String firstName;
     private String lastName;
@@ -29,6 +32,18 @@ public class Client {
     }
 
     public Client() {
+    }
+
+    public Client(Parcel in) {
+        firstName = in.readString();
+        lastName = in.readString();
+        email = in.readString();
+        phoneNumber = in.readString();
+        cityName = in.readString();
+        streetName = in.readString();
+        buildNum = in.readString();
+        aptNum = in.readString();
+        zipCode = in.readString();
     }
 
     public String getFirstName() {
@@ -101,5 +116,50 @@ public class Client {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    public static final Creator<Client> CREATOR = new Creator<Client>() {
+        @Override
+        public Client createFromParcel(Parcel in) {
+            return new Client(in);
+        }
+
+        @Override
+        public Client[] newArray(int size) {
+            return new Client[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(email);
+        dest.writeString(phoneNumber);
+        dest.writeString(cityName);
+        dest.writeString(streetName);
+        dest.writeString(buildNum);
+        dest.writeString(aptNum);
+        dest.writeString(zipCode);
+    }
+
+    @Override
+    public String toString() {
+        return "Client{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", streetName='" + streetName + '\'' +
+                ", buildNum='" + buildNum + '\'' +
+                ", aptNum='" + aptNum + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
 }

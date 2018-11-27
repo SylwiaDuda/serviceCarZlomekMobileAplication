@@ -3,6 +3,7 @@ package com.example.sylwi.servicecarzlomekmobileaplication.rest;
 import android.util.Log;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Car;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Client;
+import com.example.sylwi.servicecarzlomekmobileaplication.model.Visit;
 import com.google.gson.stream.JsonReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -168,5 +169,71 @@ public class Response {
         }
         return client;
     }
-
+    public List<Visit> geteNewVisit(){
+        JsonReader jsonReader= getJsonReader(inputStream);
+        List visitList = null;
+        Visit visit=null;
+        Car car = null;
+        if(jsonReader!=null){
+            try {
+                visitList = new ArrayList<Car>();
+                jsonReader.beginObject();
+                while (jsonReader.hasNext()) {
+                    String key = jsonReader.nextName();
+                    if (key.equals("visits")) {
+                        jsonReader.beginArray();
+                        String innerName=null;
+                        while (jsonReader.hasNext()){
+                            jsonReader.beginObject();
+                            visit = new Visit();
+                            while (jsonReader.hasNext()) {
+                                innerName = jsonReader.nextName();
+                                if (innerName.equals("id")) {
+                                    visit.setId(jsonReader.nextString());
+                                }else if(innerName.equals("visitDate")){
+                                    visit.setVisitDate(jsonReader.nextString());
+                                }else if (innerName.equals("car")) {
+                                    car=new Car();
+                                    jsonReader.beginObject();
+                                    while (jsonReader.hasNext()){
+                                        String innerInnerName = jsonReader.nextName();
+                                        if(innerInnerName.equals("vin")){
+                                            car.setVin(jsonReader.nextString());
+                                        }else if (innerInnerName.equals("registrationNumber")) {
+                                            car.setRegistrationNumber(jsonReader.nextString());
+                                        } else if (innerInnerName.equals("model")) {
+                                            car.setModel(jsonReader.nextString());
+                                        } else if (innerInnerName.equals("productionYear")) {
+                                            car.setProductionYear(jsonReader.nextString());
+                                        } else if (innerInnerName.equals("brandName")) {
+                                            car.setBrandName(jsonReader.nextString());
+                                        }else if (innerInnerName.equals("id")) {
+                                            car.setId(jsonReader.nextString());
+                                        }else{
+                                            jsonReader.skipValue();
+                                        }
+                                    }
+                                    visit.setCar(car);
+                                    jsonReader.endObject();
+                                }else{
+                                    jsonReader.skipValue();
+                                }
+                            }
+                            visitList.add(visit);
+                            jsonReader.endObject();
+                        }
+                        jsonReader.endArray();
+                    }
+                    else {
+                        jsonReader.skipValue();
+                    }
+                }
+                jsonReader.endObject();
+                jsonReader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return visitList;
+    }
 }

@@ -16,6 +16,7 @@ public class Visit {
     }
 
     public Visit() {
+        car=new Car();
     }
 
     public String getId() {

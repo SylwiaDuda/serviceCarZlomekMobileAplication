@@ -6,29 +6,32 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
-import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListCarsAdapter;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Client;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.TokenModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
-public class DataClientActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener{
+public class ClientDataActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener{
 
     Response response = null;
     String ip;
     Boolean activeSerwer;
     GetDataClientTask mGetDataClientTask = null;
+    private  Client client = null;
     String token;
-
+    private Button buttonEditData;
+    private Button buttonChangePassword;
     private TextView firstName;
     private TextView lastName;
     private TextView email;
@@ -57,9 +60,9 @@ public class DataClientActivity extends ActivityForLoggedIn implements Navigatio
 
         ip=getString(R.string.ip);
         activeSerwer=true;
-        Intent intent = getIntent();
-        token = intent.getExtras().get("TOKEN").toString();
-        setGlobalToken(token);
+        InternalStorageDirMnager internalStorageDirMnager= new InternalStorageDirMnager();
+        token = internalStorageDirMnager.getToken(getApplicationContext());
+
         firstName = (TextView)findViewById(R.id.first_name_form);
         lastName = (TextView)findViewById(R.id.last_name_form);
         email = (TextView)findViewById(R.id.email_form);
@@ -74,7 +77,24 @@ public class DataClientActivity extends ActivityForLoggedIn implements Navigatio
 
         mGetDataClientTask = new GetDataClientTask(token);
         mGetDataClientTask.execute((Void)null);
-
+        buttonEditData = (Button)findViewById(R.id.edit_data_button);
+        buttonEditData.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),EditClientDataActivity.class);
+                intent.putExtra("CLIENT",client);
+                startActivity(intent);
+            }
+        });
+        buttonChangePassword =  (Button)findViewById(R.id.change_password_button);
+        buttonChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),ChangeClientPasswordActivity.class);
+                intent.putExtra("CLIENT",client);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -138,7 +158,7 @@ public class DataClientActivity extends ActivityForLoggedIn implements Navigatio
             mGetDataClientTask= null;
             switch (status) {
                 case 200:
-                    Client client = response.getDataClient();
+                    client = response.getDataClient();
                     setDataCient(client);
                     break;
                 case 401:

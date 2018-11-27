@@ -17,11 +17,11 @@ public class ActivityForNotLoggedIn extends ActivityManager {
         int id = item.getItemId();
 
         if (id == R.id.action_sign_in) {
-            goToActivity(null,LoginActivity.class);
+            goToActivity(LoginActivity.class);
             return true;
         }
         if (id == R.id.action_register) {
-            goToActivity(null,RegistrationActivity.class);
+            goToActivity(RegistrationActivity.class);
             return true;
         }
         return super.onOptionsItemSelected(item);

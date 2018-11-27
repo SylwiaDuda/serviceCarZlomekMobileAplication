@@ -10,6 +10,8 @@ package com.example.sylwi.servicecarzlomekmobileaplication.activity;
         import android.support.v7.widget.Toolbar;
         import android.util.Log;
         import android.view.MenuItem;
+        import android.view.View;
+        import android.widget.Button;
 
         import com.example.sylwi.servicecarzlomekmobileaplication.R;
         import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
@@ -20,14 +22,6 @@ package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 public class MainActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
     private static Response response;
-
-    public static Response getResponse() {
-        return response;
-    }
-
-    public static void setResponse(Response response) {
-        MainActivity.response = response;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,20 +38,6 @@ public class MainActivity extends ActivityForLoggedIn implements NavigationView.
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        Intent intent= getIntent();
-        String previousActivityName = intent.getStringExtra("CLASSNAME");
-        String token = intent.getStringExtra("TOKEN");
-        setGlobalToken(token);
-        switch (previousActivityName){
-            case "LoginActivity":
-                //response=LoginActivity.getResponse();
-                break;
-            default:
-                break;
-        }
-        //response=LoginActivity.getResponse();
-        //Log.d("OOOOOOOOOOOOOOOOOOOOOO", response.getStringValue("accessToken"));
 
     }
 

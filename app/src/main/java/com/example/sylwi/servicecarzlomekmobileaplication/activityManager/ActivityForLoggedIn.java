@@ -3,8 +3,9 @@ package com.example.sylwi.servicecarzlomekmobileaplication.activityManager;
 import android.view.MenuItem;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.CarsActivity;
-import com.example.sylwi.servicecarzlomekmobileaplication.activity.DataClientActivity;
+import com.example.sylwi.servicecarzlomekmobileaplication.activity.ClientDataActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.LoginActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.VisitsActivity;
 
@@ -19,20 +20,21 @@ public class ActivityForLoggedIn extends ActivityManager {
         int id = item.getItemId();
 
         if(id == R.id.action_check_your_profil){
-            goToActivity(getGlobalToken(),DataClientActivity.class);
+            goToActivity(ClientDataActivity.class);
             return true;
         }
         if(id == R.id.action_car){
-            goToActivity(getGlobalToken(),CarsActivity.class);
+            goToActivity(CarsActivity.class);
             return true;
         }
         if(id == R.id.action_visits){
-            goToActivity(getGlobalToken(),VisitsActivity.class);
+            goToActivity(VisitsActivity.class);
             return true;
         }
         if (id == R.id.action_log_out) {
-            setGlobalToken(null);
-            goToActivity(null,LoginActivity.class);
+            InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
+            internalStorageDirMnager.deleteToken(getApplicationContext());
+            goToActivity(LoginActivity.class);
             return true;
         }
 
