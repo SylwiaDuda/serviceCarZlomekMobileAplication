@@ -142,7 +142,7 @@ public class ClientDataActivity extends ActivityForLoggedIn implements Navigatio
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFullClientData",new TokenModel(mToken));
+            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFullClientData",new TokenModel(mToken));
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();

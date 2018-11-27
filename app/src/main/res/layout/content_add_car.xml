@@ -41,7 +41,7 @@
             android:gravity="center"
             android:visibility="gone" />
         <ScrollView
-            android:id ="@+id/car_add_form"
+            android:id ="@+id/add_car_form"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -54,19 +54,20 @@
                     android:id="@+id/brand_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/brand_form"
-                    android:layout_alignBottom="@id/brand_form"
+                    android:layout_alignBaseline="@id/spinner_band_form"
+                    android:layout_alignBottom="@id/spinner_band_form"
                     android:layout_alignParentStart="true"
-                    android:labelFor="@id/brand_form"
+                    android:labelFor="@id/spinner_band_form"
                     android:text="@string/brand"
-                    android:textSize="18sp"/>
+                    android:textSize="18sp"
+                    android:paddingTop="@dimen/activity_vertical_margin"/>
 
-                <EditText
-                    android:id="@+id/brand_form"
+                <Spinner
+                    android:id="@+id/spinner_band_form"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toEndOf="@+id/brand_info"
-                    android:inputType="textPersonName" />
+                    android:layout_toEndOf="@id/brand_info"
+                    android:paddingTop="@dimen/activity_vertical_margin"/>
 
                 <TextView
                     android:id="@+id/model_info"
@@ -84,9 +85,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_below="@id/brand_form"
+                    android:layout_below="@id/brand_info"
                     android:layout_toEndOf="@id/model_info"
-                    android:inputType="textPersonName" />
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/registration_number_info"
@@ -106,7 +107,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/model_form"
                     android:layout_toEndOf="@id/registration_number_info"
-                    android:inputType="textPersonName" />
+                    android:inputType="text" />
 
                 <TextView
                     android:id="@+id/production_year_info"
@@ -146,7 +147,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_below="@id/production_year_form"
                     android:layout_toEndOf="@id/vin_number_info"
-                    android:inputType="textPersonName" />
+                    android:inputType="text" />
 
 
                 <LinearLayout

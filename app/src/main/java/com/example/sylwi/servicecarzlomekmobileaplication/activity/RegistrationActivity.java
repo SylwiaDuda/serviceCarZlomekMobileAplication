@@ -414,7 +414,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
         @Override
         protected Integer doInBackground(Void... params) {
             REST checkEmail= new REST();
-            response = checkEmail.request("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail",new CheckEmailModel(email));
+            response = checkEmail.requestWithMethodPOST("http://"+ip+":8080/warsztatZlomek/rest/authorization/checkEmail",new CheckEmailModel(email));
             if(!(response==null)){
                 serverIsActive =true;
                 int status=response.getResponseStatus();
@@ -487,7 +487,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.request("http://" + ip + ":8080/warsztatZlomek/rest/authorization/register",new RegistrationModel(firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password,confirmPassword));
+            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/register",new RegistrationModel(firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password,confirmPassword));
             if(!(response==null)) {
                 serverIsActive =true;
                 int status=response.getResponseStatus();

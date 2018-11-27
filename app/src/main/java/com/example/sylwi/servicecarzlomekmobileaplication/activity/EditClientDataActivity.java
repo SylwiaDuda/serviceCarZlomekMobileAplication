@@ -27,10 +27,8 @@ import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorag
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.NetworkConnection;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.TextWatcherValidateForm;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
-import com.example.sylwi.servicecarzlomekmobileaplication.model.CheckEmailModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Client;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.EditDataClientModel;
-import com.example.sylwi.servicecarzlomekmobileaplication.model.RegistrationModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
@@ -377,7 +375,7 @@ public class EditClientDataActivity extends ActivityForLoggedIn implements Navig
         @Override
         protected Integer doInBackground(Void... params) {
             REST saveNewClientData= new REST();
-            response = saveNewClientData.request("http://"+ip+":8080/warsztatZlomek/rest/updateClient/editClientData",new EditDataClientModel(accessToken,firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password, confirmPassword));
+            response = saveNewClientData.requestWithMethodPOST("http://"+ip+":8080/warsztatZlomek/rest/updateClient/editClientData",new EditDataClientModel(accessToken,firstName,lastName,email,phoneNumber,cityName,streetName,buildNum,aptNum,zipCode,password, confirmPassword));
             if(!(response==null)){
                 serverIsActive =true;
                 int status=response.getResponseStatus();
