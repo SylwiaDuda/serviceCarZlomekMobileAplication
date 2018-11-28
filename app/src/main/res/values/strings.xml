@@ -2,7 +2,7 @@
     <string name="app_name">ZŁOMEK car service</string>
 
     <!-- Strings related to login -->
-    <string name="ip">192.168.0.103</string>
+    <string name="ip">192.168.1.145</string>
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Hasło</string>
     <string name="action_sign_in">Zaloguj się</string>
@@ -61,6 +61,9 @@
     <string name="change_password">Zmień hasło</string>
     <string name="new_password">Nowe hasło:</string>
     <string name="change_password_info">Zmiana hasła</string>
-
+    <string name="choose_car">Wybierz samochód</string>
+    <string name="add_visit">Dodaj wizytę</string>
+    <string name="choose_visit_date">Podaj datę</string>
+    <string name="date_placeholder">dd-mm-yyyy</string>
 </resources>
 

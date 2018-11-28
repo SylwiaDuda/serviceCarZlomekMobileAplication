@@ -139,28 +139,33 @@ public class Response {
             try {
                 jsonReader.beginObject();
                 while (jsonReader.hasNext()) {
-                    String key = jsonReader.nextName();
-                    if (key.equals("firstName")) {
-                         client.setFirstName(jsonReader.nextString());
-                    }else if (key.equals("lastName")) {
-                        client.setLastName(jsonReader.nextString());
-                    }else  if (key.equals("email")) {
-                        client.setEmail(jsonReader.nextString());
-                    }else if (key.equals("phoneNumber")) {
-                        client.setPhoneNumber(jsonReader.nextString());
-                    }else if (key.equals("cityName")) {
-                        client.setCityName(jsonReader.nextString());
-                    }else  if (key.equals("streetName")) {
-                        client.setStreetName(jsonReader.nextString());
-                    }else if (key.equals("buildNum")) {
-                        client.setBuildNum(jsonReader.nextString());
-                    }else if (key.equals("aptNum")) {
-                        client.setAptNum(jsonReader.nextString());
-                    }else if (key.equals("zipCode")) {
-                        client.setZipCode(jsonReader.nextString());
-                    }else {
+                    try {
+                        String key = jsonReader.nextName();
+                        if (key.equals("firstName")) {
+                            client.setFirstName(jsonReader.nextString());
+                        } else if (key.equals("lastName")) {
+                            client.setLastName(jsonReader.nextString());
+                        } else if (key.equals("email")) {
+                            client.setEmail(jsonReader.nextString());
+                        } else if (key.equals("phoneNumber")) {
+                            client.setPhoneNumber(jsonReader.nextString());
+                        } else if (key.equals("cityName")) {
+                            client.setCityName(jsonReader.nextString());
+                        } else if (key.equals("streetName")) {
+                            client.setStreetName(jsonReader.nextString());
+                        } else if (key.equals("buildNum")) {
+                            client.setBuildNum(jsonReader.nextString());
+                        } else if (key.equals("aptNum")) {
+                            client.setAptNum(jsonReader.nextString());
+                        } else if (key.equals("zipCode")) {
+                            client.setZipCode(jsonReader.nextString());
+                        } else {
+                            jsonReader.skipValue();
+                        }
+                    }catch (Exception e ){
                         jsonReader.skipValue();
                     }
+
                 }
                 jsonReader.close();
             } catch (IOException e) {

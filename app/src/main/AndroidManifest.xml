@@ -37,7 +37,7 @@
         <activity
             android:name=".activity.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".AddVisitActivity" />
+        <activity android:name=".activity.AddVisitActivity" />
         <activity
             android:name=".activity.CarsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
