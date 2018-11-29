@@ -23,7 +23,7 @@ public class AddVisitListener implements View.OnClickListener {
             getValue(view);
         }
     }
-
+//
     public boolean getValue(View view) {
         switch (view.getId()) {
             case (R.id.date_form):
