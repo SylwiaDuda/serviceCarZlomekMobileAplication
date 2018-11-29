@@ -136,6 +136,7 @@ public class Response {
         Client client = null;
         if(jsonReader!=null){
             client=new Client();
+            //tu
             try {
                 jsonReader.beginObject();
                 while (jsonReader.hasNext()) {
