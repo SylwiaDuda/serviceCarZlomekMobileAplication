@@ -61,9 +61,11 @@
     <string name="change_password">Zmień hasło</string>
     <string name="new_password">Nowe hasło:</string>
     <string name="change_password_info">Zmiana hasła</string>
-    <string name="choose_car">Wybierz samochód</string>
+    <string name="choose_car">Samochód</string>
     <string name="add_visit">Dodaj wizytę</string>
     <string name="choose_visit_date">Podaj datę</string>
     <string name="date_placeholder">dd-mm-yyyy</string>
+    <string name="visit_date_invalid">Data wizyty powinna być co najmniej dzisiaj i nie przekraczać 3 tygodni</string>
+    <string name="choose_visit_time">Podaj godzinę</string>
 </resources>
 
