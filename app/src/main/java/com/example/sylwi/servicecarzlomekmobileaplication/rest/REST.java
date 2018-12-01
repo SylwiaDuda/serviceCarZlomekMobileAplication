@@ -47,11 +47,13 @@ public class REST {
             httpURLConnection = getConnection(url);
             dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
             Gson gson = new Gson();
+            Log.d("String", gson.toJson(objectJSON));
             dataOutputStream.writeBytes(gson.toJson(objectJSON));
             dataOutputStream.flush();
             dataOutputStream.close();
             response = new Response();
             response.setResponseStatus(httpURLConnection.getResponseCode());
+            Log.d("Status",Integer.toString(response.getResponseStatus()));
             inputStream= httpURLConnection.getInputStream();
             response.setInputStream(inputStream);
             return response;

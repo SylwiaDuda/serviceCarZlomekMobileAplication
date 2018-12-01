@@ -54,47 +54,40 @@
                                     android:id="@+id/brand_info"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@id/brand_form"
-                                    android:layout_alignBottom="@id/brand_form"
+                                    android:layout_alignBaseline="@id/cars"
+                                    android:layout_alignBottom="@id/cars"
                                     android:layout_alignParentStart="true"
-                                    android:labelFor="@id/brand_form"
+                                    android:labelFor="@id/cars"
                                     android:text="@string/choose_car"
                                     android:textSize="18sp"/>
 
                                 <Spinner
-                                    android:id="@+id/brand_form"
+                                    android:id="@+id/cars"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_toEndOf="@+id/brand_info"
                                     android:inputType="textPersonName" />
 
-                                <TextView
-                                    android:id="@+id/visit_date"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_alignBaseline="@id/date_form"
-                                    android:layout_alignBottom="@id/date_form"
-                                    android:layout_alignParentStart="true"
-                                    android:labelFor="@id/date_form"
-                                    android:text="@string/choose_visit_date"
-                                    android:textSize="18sp" />
-
-                                <EditText
-                                    android:id="@+id/date_form"
+                                <Button
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:layout_alignParentEnd="true"
-                                    android:layout_below="@id/brand_form"
-                                    android:layout_toEndOf="@id/visit_date"
-                                    android:inputType="textPersonName"
-                                    android:hint="@string/date_placeholder"/>
+                                    android:id="@+id/date_button"
+                                    android:layout_below="@+id/cars"
+                                    android:text="@string/choose_visit_date"/>
+
+                                <Button
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:id="@+id/time_button"
+                                    android:layout_below="@+id/date_button"
+                                    android:text="@string/choose_visit_time"/>
 
                                 <TextView
                                     android:id="@+id/is_overview_info"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_alignBaseline="@id/is_overview"
-                                    android:layout_alignBottom="@id/date_form"
+                                    android:layout_alignBottom="@id/time_button"
                                     android:layout_alignParentStart="true"
                                     android:labelFor="@id/is_overview"
                                     android:text="@string/is_overview"
@@ -105,7 +98,7 @@
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_alignParentEnd="true"
-                                    android:layout_below="@id/date_form"
+                                    android:layout_below="@id/time_button"
                                     android:layout_toEndOf="@id/is_overview_info"
                                     android:inputType="textPersonName" />
 

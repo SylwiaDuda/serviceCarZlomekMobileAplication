@@ -1,6 +1,7 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -10,6 +11,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
@@ -51,10 +54,18 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         navigationView.setNavigationItemSelectedListener(this);
         visitListView = (ListView)findViewById(R.id.visit_list);
         InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
-        String token = internalStorageDirMnager.getToken(mContext);
+        final String token = internalStorageDirMnager.getToken(mContext);
         mGetVisitTask = new GetVisitTask(token);
         mGetVisitTask.execute((Void)null);
 
+        ((Button)findViewById(R.id.button_add_visit)).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), AddVisitActivity.class);
+                intent.putExtra("token", token);
+                startActivity(intent);
+            }
+        });
     }
         //carListView = (ListView)findViewById(R.id.car_list);
        // carListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
