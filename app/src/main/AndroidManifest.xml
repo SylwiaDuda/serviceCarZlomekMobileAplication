@@ -37,7 +37,9 @@
         <activity
             android:name=".activity.RegistrationActivity"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".activity.AddVisitActivity" />
+        <activity
+            android:name=".activity.AddVisitActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".activity.CarsActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -57,6 +59,10 @@
         </activity>
         <activity
             android:name=".activity.ChangeClientPasswordActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity
+            android:name=".activity.CarActivity"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>

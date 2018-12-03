@@ -23,14 +23,14 @@ public class AddVisit extends AsyncTask<Void, Void, Integer> {
 
     @Override
     protected Integer doInBackground(Void... voids) {
-        REST login = new REST();
-        Response response = login.requestWithMethodPOST("http://" + activity.getApplicationContext().
+        REST addVisit = new REST();
+        Response response = addVisit.requestWithMethodPOST("http://" + activity.getApplicationContext().
                 getString(R.string.ip) + ":8080/warsztatZlomek/rest/visits/add", model);
         if(response!=null) {
-            String token = response.getToken();
+            /*String token = response.getAccessToken();
             if(token != null){
                 activity.setAccessToken(token);
-            }
+            }*/
             return response.getResponseStatus();
         }
         return null;

@@ -4,8 +4,9 @@ package com.example.sylwi.servicecarzlomekmobileaplication.rest;
 import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
-
 import java.io.BufferedReader;
+import com.google.gson.JsonObject;
+import com.google.gson.stream.JsonReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,6 +16,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.util.List;
+
 /**
  * Created by sylwi on 12.11.2018.
  */
@@ -57,7 +60,6 @@ public class REST {
             dataOutputStream.close();
             response = new Response();
             response.setResponseStatus(httpURLConnection.getResponseCode());
-            Log.d("Status",Integer.toString(response.getResponseStatus()));
             inputStream= httpURLConnection.getInputStream();
             BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
             StringBuilder responseStrBuilder = new StringBuilder();
@@ -65,7 +67,16 @@ public class REST {
             String inputStr;
             while ((inputStr = streamReader.readLine()) != null)
                 responseStrBuilder.append(inputStr);
-            response.setInputStream(responseStrBuilder.toString());
+
+            if(url.contains("/authorization/getFutureVisits")){
+                response.setNewVisitList(responseStrBuilder.toString());
+            }else if(url.contains("/authorization/signIn")){
+                response.setAccessToken(responseStrBuilder.toString());
+            }else if(url.contains("/authorization/getFullClientData")){
+                response.setClient(responseStrBuilder.toString());
+            }else if(url.contains("/car/getAllClientsCars")){
+                response.setListCar(responseStrBuilder.toString());
+            }
             inputStream.close();
             return response;
         } catch (UnsupportedEncodingException e) {
@@ -88,11 +99,6 @@ public class REST {
         try {
             httpURLConnection = getConnection(url);
             httpURLConnection.setRequestMethod("GET");
-            //dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
-            //Gson gson = new Gson();
-            //dataOutputStream.writeBytes(gson.toJson(objectJSON));
-            ///dataOutputStream.flush();
-           // dataOutputStream.close();
             response = new Response();
             response.setResponseStatus(httpURLConnection.getResponseCode());
             inputStream= httpURLConnection.getInputStream();
@@ -102,7 +108,9 @@ public class REST {
             String inputStr;
             while ((inputStr = streamReader.readLine()) != null)
                 responseStrBuilder.append(inputStr);
-            response.setInputStream(responseStrBuilder.toString());
+            if(url.contains("/car/getAllCarBrands")){
+                response.setCarBrandsList(responseStrBuilder.toString());
+            }
             return response;
         } catch (UnsupportedEncodingException e) {
             Log.d("catch","UnsupportedEncodingException");

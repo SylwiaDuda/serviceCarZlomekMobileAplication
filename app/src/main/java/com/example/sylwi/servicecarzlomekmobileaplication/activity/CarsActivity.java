@@ -1,6 +1,7 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -9,12 +10,14 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 
@@ -23,6 +26,7 @@ import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorag
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListCarsAdapter;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.Car;
+import com.example.sylwi.servicecarzlomekmobileaplication.model.DeleteCarModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.TokenModel;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.REST;
 import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
@@ -31,6 +35,7 @@ import java.util.List;
 
 public class CarsActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
     private GetCarsTask mGetCarsTask = null;
+    private DeleteCarTask mDeleteCarTask = null;
     private String ip;
     private boolean activeSerwer = true;
     private Response response = null;
@@ -38,6 +43,10 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
     private List <Car>carsList;
     private Context mContext;
     private Button buttonAddCar;
+    private String token;
+    private int carsToRemoved = 0;
+    private int removedCars = 0;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
         mContext = getApplicationContext();
         ip=getString(R.string.ip);
         InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
-        String token = internalStorageDirMnager.getToken(mContext);
+        token = internalStorageDirMnager.getToken(mContext);
         mGetCarsTask = new GetCarsTask(token);
         mGetCarsTask.execute((Void) null);
 
@@ -72,7 +81,6 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
             public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
                 MenuInflater pompka = actionMode.getMenuInflater();
                 pompka.inflate(R.menu.menu_remove_car,menu);
-
                 return true;
             }
 
@@ -85,14 +93,16 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.action_delete:
-                        long checked[] = carListView.getCheckedItemIds();
+                        SparseBooleanArray sparseBooleanArray = carListView.getCheckedItemPositions();
+                        carsToRemoved = sparseBooleanArray.size();
+                        for (int i = 0; i < sparseBooleanArray.size(); ++i){
+                            if(sparseBooleanArray.valueAt(i)){
 
-                        for (int i = 0; i < checked.length; ++i){
-                            long idLong = checked[i];
-                            int idInt = (int) idLong;
-                            Car car = carsList.get(idInt);
-                            Log.d("ccccccccccccccc",car.toString());
-
+                                Car car = (Car)carListView.getAdapter().getItem(
+                                        sparseBooleanArray.keyAt(i));
+                                mDeleteCarTask = new DeleteCarTask(token,car.getId());
+                                mDeleteCarTask.execute((Void) null);
+                            }
                         }
                         return true;
                 }
@@ -101,7 +111,15 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
 
             @Override
             public void onDestroyActionMode(ActionMode actionMode) {
-
+            }
+        });
+        carListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long id) {
+                Car car = (Car)carListView.getAdapter().getItem(i);
+                Intent intent = new Intent(getApplicationContext(),CarActivity.class);
+                intent.putExtra("CAR",car);
+                startActivity(intent);
             }
         });
         buttonAddCar = (Button) findViewById(R.id.button_add_car);
@@ -124,6 +142,8 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
     }
 
 
+
+    @Override
     @SuppressWarnings("StatementWithEmptyBody")
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
@@ -157,12 +177,12 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
 
         @Override
         protected Integer doInBackground(Void... params) {
-            REST login = new REST();
-            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/car/getCarData",new TokenModel(mToken));
+            REST getCars = new REST();
+            response = getCars.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/car/getAllClientsCars",new TokenModel(mToken));
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();
-                Log.d("gggggggggggg:", String.valueOf(status));
+                carsList = response.getListCar();
                 return status;
             }else{
                 activeSerwer=false;
@@ -174,7 +194,6 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
             mGetCarsTask= null;
             switch (status) {
                 case 200:
-                    carsList = response.getCarList();
                     ListCarsAdapter adapter = new ListCarsAdapter(mContext,R.layout.row_list_cars,carsList);
                     carListView.setAdapter(adapter);
                     break;
@@ -200,4 +219,63 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
             //showProgress(false);
         }
     }
+    public class DeleteCarTask extends AsyncTask<Void, Void, Integer> {
+
+        private final String mToken;
+        private final String carId;
+
+        public DeleteCarTask(String mToken, String carId) {
+            this.mToken = mToken;
+            this.carId = carId;
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            REST deleteCar = new REST();
+
+            response = deleteCar.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/updateClient/removeCar",new DeleteCarModel(token,carId));
+            if(!(response==null)) {
+                activeSerwer=true;
+                int status=response.getResponseStatus();
+                //InternalStorageDirMnager internalStorageDirMnager =new InternalStorageDirMnager();
+                //internalStorageDirMnager.setToken(response.get,mContext);
+                return status;
+            }else{
+                activeSerwer=false;
+                return -1;
+            }
+        }
+        @Override
+        protected void onPostExecute(final Integer status) {
+            mGetCarsTask= null;
+            removedCars ++;
+            switch (status) {
+                case 200:
+                   if(carsToRemoved== removedCars){
+                       goToActivity(CarsActivity.class);
+                   }
+                   break;
+                case 401:
+                    //showProgress(false);
+                    break;
+                case -1:
+                    if(!activeSerwer){
+                        //showProgress(false);
+                        // String toastText = "Server is unreachable!";
+                        //Toast toast = Toast.makeText(mContext, toastText, Toast.LENGTH_LONG);
+                        //toast.show();
+                    }
+                    break;
+                default:
+                    // showProgress(false);
+                    break;
+            }
+        }
+        @Override
+        protected void onCancelled() {
+            mGetCarsTask = null;
+            //showProgress(false);
+        }
+    }
+
 }
