@@ -16,8 +16,9 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
     }
 
     private AddVisitActivity activity;
+
     @SuppressLint("ValidFragment")
-    public DatePicker(AddVisitActivity activity){
+    public DatePicker(AddVisitActivity activity) {
         this.activity = activity;
     }
 
@@ -35,10 +36,10 @@ public class DatePicker extends DialogFragment implements DatePickerDialog.OnDat
 
     public void onDateSet(android.widget.DatePicker view, int year, int month, int day) {
         GregorianCalendar picked = new GregorianCalendar(year, month, day);
-        if(this.activity.validateDate(picked)){
+        if (this.activity.validateDate(picked)) {
             activity.setVisitDate(picked.getTime());
-            return;
-        }
-        activity.notifyDateProblem();
+        } else
+            activity.notifyDateProblem();
+        this.activity.updateDateView();
     }
 }

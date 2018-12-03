@@ -8,18 +8,9 @@ public class AddVisitModel {
     private boolean isOverview;
     private String accessToken;
 
-    public AddVisitModel(long carId, Calendar date, boolean isOverview, String accessToken) {
+    public AddVisitModel(long carId, String date, boolean isOverview, String accessToken) {
         this.carId = carId;
-        String minute = (date.get(Calendar.MINUTE)<10)?"0"+date.get(Calendar.MINUTE):
-                Integer.toString(date.get(Calendar.MINUTE));
-        String hour = (date.get(Calendar.HOUR_OF_DAY)<10)?"0"+date.get(Calendar.HOUR_OF_DAY):
-                Integer.toString(date.get(Calendar.HOUR_OF_DAY));
-        String day = (date.get(Calendar.DAY_OF_MONTH)<10)?"0"+date.get(Calendar.DAY_OF_MONTH):
-                Integer.toString(date.get(Calendar.DAY_OF_MONTH));
-        String month = (date.get(Calendar.MONTH)+1<10)?"0"+date.get(Calendar.MONTH):
-                Integer.toString(date.get(Calendar.MONTH)+1);
-        this.visitDate = day + "-" + month+ "-" + date.get(Calendar.YEAR)
-        + " " + hour + ":" + minute;
+        this.visitDate = date;
         this.isOverview = isOverview;
         this.accessToken = accessToken;
     }

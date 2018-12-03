@@ -18,9 +18,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.AddVisit;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
 import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.dialogs.DatePicker;
@@ -46,6 +48,11 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
     private Response response = null;
     private Date visitDate = null;
     private List<Car> carsList;
+    private String hour = "";
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
 
     private Car car = null;
 
@@ -59,6 +66,10 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
 
     public void notifyDateProblem(){
         Toast.makeText(getApplicationContext(), R.string.visit_date_invalid, Toast.LENGTH_LONG).show();
+    }
+
+    public void notifyTimeProblem(){
+        Toast.makeText(getApplicationContext(), R.string.visit_time_invalid, Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -92,11 +103,10 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
             public void onClick(View view) {
                 AddVisitModel model = collectData();
                 if(model == null){
-                    Log.d("tag", "Taki...");
                     return;
                 }
-               // AddVisit addVisit = new AddVisit(model, AddVisitActivity.this);
-                //addVisit.execute();
+                AddVisit addVisit = new AddVisit(model, AddVisitActivity.this);
+                addVisit.execute();
             }
         });
 
@@ -105,6 +115,7 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
         dateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AddVisitActivity.this.visitDate = null;
                 DialogFragment newFragment = new DatePicker(AddVisitActivity.this);
                 newFragment.show(getFragmentManager(), "datePicker");
             }
@@ -114,6 +125,7 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
         timeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AddVisitActivity.this.hour = "";
                 DialogFragment timeFragment = new TimePicker(AddVisitActivity.this);
                 timeFragment.show(getFragmentManager(), "timePicker");
             }
@@ -135,6 +147,26 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
                 }
             }
         });
+    }
+
+    public String parseDateToString(){
+        String day = "",month = "";
+        Calendar date = null;
+        if(this.visitDate != null) {
+            date = Calendar.getInstance();
+            date.setTime(this.visitDate);
+            day = (date.get(Calendar.DAY_OF_MONTH)<10)?"0"+date.get(Calendar.DAY_OF_MONTH):
+                    Integer.toString(date.get(Calendar.DAY_OF_MONTH));
+            month = (date.get(Calendar.MONTH)+1<10)?"0"+date.get(Calendar.MONTH):
+                    Integer.toString(date.get(Calendar.MONTH)+1);
+        }
+        return day + "-" + month+ "-" + ((date != null)?date.get(Calendar.YEAR): "")
+                + " " + ((hour!=null && !hour.equals(""))? hour:"00:00");
+    }
+
+    public void updateDateView(){
+        TextView currentDate = (TextView)findViewById(R.id.current_date);
+        currentDate.setText(parseDateToString());
     }
 
     @Override
@@ -172,11 +204,25 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
         return true;
     }
     public AddVisitModel collectData(){
+        if (visitDate == null) {
+            this.notifyDateProblem();
+            return null;
+        }
+        Log.d("data", this.getVisitDate().toString());
         Calendar visitDate = Calendar.getInstance();
         visitDate.setTime(this.visitDate);
         boolean checked = ((CheckBox)findViewById(R.id.is_overview)).isChecked();
-        return (validateDate(visitDate) && validateTime(visitDate.get(Calendar.HOUR_OF_DAY)))?
-                new AddVisitModel(Long.parseLong(car.getId()), visitDate, checked, this.accessToken):null;
+        boolean dataCorrect = true;
+        if(!validateDate(visitDate)){
+            this.notifyDateProblem();
+            dataCorrect = false;
+        }
+        if("".equals(this.hour)){
+            this.notifyTimeProblem();
+            dataCorrect = false;
+        }
+        return (dataCorrect)?
+                new AddVisitModel(Long.parseLong(car.getId()), this.parseDateToString(), checked, this.accessToken):null;
     }
 
     public boolean validateTime(int hour){
@@ -187,7 +233,6 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
         GregorianCalendar min = new GregorianCalendar();
         GregorianCalendar max = new GregorianCalendar();
         max.add(GregorianCalendar.DAY_OF_YEAR, 21);
-        Log.d("Date", Boolean.toString(calendar.before(max) && calendar.after(min)));
         return calendar.before(max) && calendar.after(min);
     }
     public class GetCarsTask extends AsyncTask<Void, Void, Integer> {

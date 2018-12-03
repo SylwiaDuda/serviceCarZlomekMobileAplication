@@ -77,6 +77,12 @@
                                     android:layout_marginTop="16dp"
                                     android:text="Data wizyty: "
                                     android:textSize="18sp" />
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toEndOf="@id/date_info"
+                                    android:layout_alignBaseline="@id/date_info"
+                                    android:id="@+id/current_date"/>
 
                                 <Button
                                     android:id="@+id/date_button"

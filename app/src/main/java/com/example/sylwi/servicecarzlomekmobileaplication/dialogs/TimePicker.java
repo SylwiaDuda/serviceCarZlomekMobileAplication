@@ -37,8 +37,14 @@ public class TimePicker extends DialogFragment
     }
 
     public void onTimeSet(android.widget.TimePicker view, int hourOfDay, int minute) {
-        if(this.activity.validateTime(hourOfDay) && activity.getVisitDate() != null) {
-            activity.setVisitDate(new Date(activity.getVisitDate().getTime()+(hourOfDay*3600+ minute*60)*1000));
-        }
+        if (this.activity.validateTime(hourOfDay)) {
+            String currentMinute = (minute < 10) ? "0" + Integer.toString(minute) :
+                    Integer.toString(minute);
+            String hour = (hourOfDay < 10) ? "0" + Integer.toString(hourOfDay) :
+                    Integer.toString(hourOfDay);
+            this.activity.setHour(hour + ":" + currentMinute);
+        } else
+            this.activity.notifyTimeProblem();
+        this.activity.updateDateView();
     }
 }
