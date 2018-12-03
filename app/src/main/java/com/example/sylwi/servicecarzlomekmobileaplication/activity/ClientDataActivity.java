@@ -146,6 +146,7 @@ public class ClientDataActivity extends ActivityForLoggedIn implements Navigatio
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();
+                client = response.getClient();
                 Log.d("status:", String.valueOf(status));
                 return status;
             }else{
@@ -158,7 +159,7 @@ public class ClientDataActivity extends ActivityForLoggedIn implements Navigatio
             mGetDataClientTask= null;
             switch (status) {
                 case 200:
-                    client = response.getDataClient();
+
                     setDataCient(client);
                     break;
                 case 401:

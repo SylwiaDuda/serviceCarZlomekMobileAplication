@@ -168,6 +168,7 @@ public class AddCarActivity extends ActivityForLoggedIn implements NavigationVie
             if(!(response==null)) {
                 serverIsActive=true;
                 int status=response.getResponseStatus();
+                brandsList = response.getCarBrandsList();
                 return status;
             }else{
                 serverIsActive=false;
@@ -179,8 +180,6 @@ public class AddCarActivity extends ActivityForLoggedIn implements NavigationVie
             mGetBrandsTask= null;
             switch (status) {
                 case 200:
-                    brandsList = response.getCarBrands();
-                    Collections.sort(brandsList);
                     setBrandsInSpinner();
                     //setDataCient(client);
                     break;

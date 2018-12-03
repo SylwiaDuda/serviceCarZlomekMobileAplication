@@ -61,58 +61,10 @@ public class VisitsActivity extends ActivityForLoggedIn implements NavigationVie
         ((Button) findViewById(R.id.button_add_visit)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AddVisitActivity.class);
-                intent.putExtra("token", token);
-                startActivity(intent);
+               goToActivity(AddVisitActivity.class);
             }
         });
     }
-    //carListView = (ListView)findViewById(R.id.car_list);
-    // carListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
-       /*carListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
-            @Override
-            public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
-
-            }
-
-            @Override
-            public boolean onCreateActionMode(ActionMode actionMode, Menu menu) {
-                MenuInflater pompka = actionMode.getMenuInflater();
-                pompka.inflate(R.menu.menu_remove_car,menu);
-
-                return true;
-            }
-
-            @Override
-            public boolean onPrepareActionMode(ActionMode actionMode, Menu menu) {
-                return false;
-            }
-
-            @Override
-            public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
-                switch (menuItem.getItemId()) {
-                    case R.id.action_delete:
-                        long checked[] = carListView.getCheckedItemIds();
-
-                        for (int i = 0; i < checked.length; ++i){
-                            long idLong = checked[i];
-                            int idInt = (int) idLong;
-                            Car car = carsList.get(idInt);
-                            Log.d("ccccccccccccccc",car.toString());
-
-                        }
-                        return true;
-                }
-                return false;
-            }
-
-            @Override
-            public void onDestroyActionMode(ActionMode actionMode) {
-
-            }
-        });*
-
-    }*/
 
     @Override
     public void onBackPressed() {
@@ -159,14 +111,12 @@ public class VisitsActivity extends ActivityForLoggedIn implements NavigationVie
 
         @Override
         protected Integer doInBackground(Void... params) {
-            REST login = new REST();
-            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits", new TokenModel(mToken));
-            if (!(response == null)) {
-                activeSerwer = true;
-                int status = response.getResponseStatus();
-                Log.d("gggggggggggg:", String.valueOf(status));
-                if (status == 200)
-                    visitList = response.getNewVisit();
+            REST getVisit = new REST();
+            response = getVisit.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits",new TokenModel(mToken));
+            if(!(response==null)) {
+                activeSerwer=true;
+                int status=response.getResponseStatus();
+                visitList = response.getNewVisitList();
                 return status;
             } else {
                 activeSerwer = false;
@@ -179,8 +129,7 @@ public class VisitsActivity extends ActivityForLoggedIn implements NavigationVie
             mGetVisitTask = null;
             switch (status) {
                 case 200:
-                    Log.d("vvvvvvvvvvvv: ", visitList.toString());
-                    ListVisitsAdapter adapter = new ListVisitsAdapter(mContext, R.layout.row_list_visits, visitList);
+                    ListVisitsAdapter adapter = new ListVisitsAdapter(mContext,R.layout.row_list_visits,visitList);
                     visitListView.setAdapter(adapter);
                     break;
                 case 401:

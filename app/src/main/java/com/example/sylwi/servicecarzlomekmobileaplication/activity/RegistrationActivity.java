@@ -61,6 +61,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
     private CheckEmailTask mCheckEmailTask = null;
     private boolean serverIsActive = true;
     private Response response=null;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -491,6 +492,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
             if(!(response==null)) {
                 serverIsActive =true;
                 int status=response.getResponseStatus();
+                token = response.getAccessToken();
                 Log.d("SignIn response status:", String.valueOf(status));
                 return status;
             }else{
@@ -504,7 +506,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
             switch (status) {
                 case 200:
                     InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
-                    internalStorageDirMnager.setToken(response.getToken(),mContext);
+                    internalStorageDirMnager.setToken(token,mContext);
                     internalStorageDirMnager.setKey(password,mContext);
                     internalStorageDirMnager.setEmail(email,mContext);
                     showToast();

@@ -76,6 +76,7 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
     /**
      * Keep track of the login task to ensure we can cancel it if requested.
      */
+    private  String token;
     private String ip;
     private static Context mContext;
     private UserLoginTask mAuthTask = null;
@@ -456,7 +457,7 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
             if(!(response==null)) {
                 activeSerwer=true;
                 int status=response.getResponseStatus();
-
+                token = response.getAccessToken();
                 Log.d("SignIn response status:", String.valueOf(status));
                 return status;
             }else{
@@ -469,7 +470,6 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
             mAuthTask = null;
             switch (status) {
                 case 200:
-                    String token = response.getToken();
                     InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
                     internalStorageDirMnager.setToken(token, mContext);
                     internalStorageDirMnager.setEmail(mEmail,mContext);

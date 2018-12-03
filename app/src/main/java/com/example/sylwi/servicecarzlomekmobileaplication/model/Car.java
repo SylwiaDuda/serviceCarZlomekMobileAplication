@@ -1,12 +1,15 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.ArrayList;
 
 /**
  * Created by sylwi on 19.11.2018.
  */
 
-public class Car{
+public class Car implements Parcelable{
 
     private String vin;
     private String registrationNumber;
@@ -26,6 +29,41 @@ public class Car{
     public Car() {
     }
 
+    protected Car(Parcel in) {
+        vin = in.readString();
+        registrationNumber = in.readString();
+        model = in.readString();
+        productionYear = in.readString();
+        brandName = in.readString();
+        id = in.readString();
+    }
+
+    public static final Creator<Car> CREATOR = new Creator<Car>() {
+        @Override
+        public Car createFromParcel(Parcel in) {
+            return new Car(in);
+        }
+
+        @Override
+        public Car[] newArray(int size) {
+            return new Car[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(vin);
+        dest.writeString(registrationNumber);
+        dest.writeString(model);
+        dest.writeString(productionYear);
+        dest.writeString(brandName);
+        dest.writeString(id);
+    }
     public String getVin() {
         return vin;
     }

@@ -2,11 +2,16 @@ package com.example.sylwi.servicecarzlomekmobileaplication.activity;
 
 import android.app.DialogFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,7 +21,8 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
-import com.example.sylwi.servicecarzlomekmobileaplication.Service.AddVisit;
+import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorageDirMnager;
+import com.example.sylwi.servicecarzlomekmobileaplication.activityManager.ActivityForLoggedIn;
 import com.example.sylwi.servicecarzlomekmobileaplication.dialogs.DatePicker;
 import com.example.sylwi.servicecarzlomekmobileaplication.dialogs.TimePicker;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.AddVisitModel;
@@ -31,16 +37,17 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-public class AddVisitActivity extends AppCompatActivity {
+public class AddVisitActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener{
     private String accessToken;
+    private Context mContext;
+    private String ip;
+    private boolean serverIsActive = true;
+    private GetCarsTask mGetCarsTask = null;
+    private Response response = null;
     private Date visitDate = null;
     private List<Car> carsList;
-    private Context context;
-    private Car car = null;
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
+    private Car car = null;
 
     public void setVisitDate(Date date){
         visitDate = date;
@@ -57,10 +64,28 @@ public class AddVisitActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_visit);
-        Intent intent = getIntent();
-        this.accessToken = intent.getStringExtra("token");
-        context = getApplicationContext();
+        setContentView(R.layout.activity_add_visit_layout);
+        findViewById(R.id.activity_add_visit).getBackground().setAlpha(50);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_add_visit);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.addDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        mContext = getApplicationContext();
+        ip=getString(R.string.ip);
+        InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
+        accessToken = internalStorageDirMnager.getToken(mContext);
+        mGetCarsTask = new GetCarsTask(accessToken);
+        mGetCarsTask.execute((Void) null);
+
+
+
         Button addVisitButton = (Button)findViewById(R.id.add_visit_button);
         addVisitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,11 +95,11 @@ public class AddVisitActivity extends AppCompatActivity {
                     Log.d("tag", "Taki...");
                     return;
                 }
-                AddVisit addVisit = new AddVisit(model, AddVisitActivity.this);
-                addVisit.execute();
+               // AddVisit addVisit = new AddVisit(model, AddVisitActivity.this);
+                //addVisit.execute();
             }
         });
-        findViewById(R.id.activity_add_visit).getBackground().setAlpha(50);
+
 
         Button dateButton = (Button) findViewById(R.id.date_button);
         dateButton.setOnClickListener(new View.OnClickListener() {
@@ -103,11 +128,48 @@ public class AddVisitActivity extends AppCompatActivity {
 
             @Override
             public void onNothingSelected(AdapterView<?> adapterView) {
-                car = null;
+                if(carsList.size()>0){
+                    car = carsList.get(0);
+                }else {
+                    car = null;
+                }
             }
         });
-        GetCarsTask task = new GetCarsTask(this.accessToken);
-        task.execute();
+    }
+
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_add_visit);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+
+    @SuppressWarnings("StatementWithEmptyBody")
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
+
+        if (id == R.id.nav_camera) {
+            // Handle the camera action
+        } else if (id == R.id.nav_gallery) {
+
+        } else if (id == R.id.nav_slideshow) {
+
+        } else if (id == R.id.nav_manage) {
+
+        } else if (id == R.id.nav_share) {
+
+        } else if (id == R.id.nav_send) {
+
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_add_visit);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
     public AddVisitModel collectData(){
         Calendar visitDate = Calendar.getInstance();
@@ -130,41 +192,45 @@ public class AddVisitActivity extends AppCompatActivity {
     }
     public class GetCarsTask extends AsyncTask<Void, Void, Integer> {
 
-        private final String mToken;
+        private final String accessToken;
 
         GetCarsTask(String token) {
-            mToken = token;
+            accessToken = token;
         }
-        Response response;
+
         @Override
         protected Integer doInBackground(Void... params) {
-            REST login = new REST();
-            Log.d("ip", getString(R.string.ip));
-            response = login.requestWithMethodPOST("http://" + getString(R.string.ip) + ":8080/warsztatZlomek/rest/car/getAllClientsCars",new TokenModel(mToken));
+            REST getCars = new REST();
+            response = getCars.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/car/getAllClientsCars",new TokenModel(accessToken));
             if(response!=null) {
+                serverIsActive=true;
                 int status=response.getResponseStatus();
                 Log.d("status", Integer.toString(status));
+                carsList = response.getListCar();
                 return status;
             }else{
+                serverIsActive=false;
                 return -1;
             }
         }
         @Override
         protected void onPostExecute(final Integer status) {
+            mGetCarsTask= null;
             switch (status) {
                 case 200:
-                    carsList = response.getCarList();
                     Spinner spinner = findViewById(R.id.cars);
                     List<String> cars = new ArrayList<>();
                     for (Car car: carsList){
                         cars.add(car.getBrandName()+" "+car.getModel()+" "+car.getRegistrationNumber());
                     }
                     car = carsList.get(0);
-                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(context, R.layout.support_simple_spinner_dropdown_item, cars);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, R.layout.support_simple_spinner_dropdown_item, cars);
                     spinner.setAdapter(adapter);
                     break;
                 case 401:
                     //showProgress(false);
+                    break;
+                default:
                     break;
             }
         }
