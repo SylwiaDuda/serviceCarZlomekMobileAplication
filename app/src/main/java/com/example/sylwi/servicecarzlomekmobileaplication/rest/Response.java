@@ -133,9 +133,16 @@ public class Response {
             }
         }
         return carlist;*/
+        JsonParser parser = new JsonParser();
+        JsonElement element = parser.parse(inputStream);
+        JsonObject visitsObj = element.getAsJsonObject();
+        JsonArray array = visitsObj.getAsJsonArray("cars");
+        ArrayList<Car> cars = new ArrayList<>();
         Gson gson = new Gson();
-        Car[] cars = gson.fromJson(inputStream, Car[].class);
-        return Arrays.asList(cars);
+        for (int i = 0; i < array.size(); i++) {
+            cars.add(gson.fromJson(array.get(i), Car.class));
+        }
+        return cars;
     }
 
     public Client getDataClient() {
