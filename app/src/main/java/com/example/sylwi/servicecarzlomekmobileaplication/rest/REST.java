@@ -3,9 +3,13 @@ package com.example.sylwi.servicecarzlomekmobileaplication.rest;
 
 import android.util.Log;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+
+import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -55,7 +59,14 @@ public class REST {
             response.setResponseStatus(httpURLConnection.getResponseCode());
             Log.d("Status",Integer.toString(response.getResponseStatus()));
             inputStream= httpURLConnection.getInputStream();
-            response.setInputStream(inputStream);
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            StringBuilder responseStrBuilder = new StringBuilder();
+
+            String inputStr;
+            while ((inputStr = streamReader.readLine()) != null)
+                responseStrBuilder.append(inputStr);
+            response.setInputStream(responseStrBuilder.toString());
+            inputStream.close();
             return response;
         } catch (UnsupportedEncodingException e) {
             Log.d("catch","UnsupportedEncodingException");
@@ -85,7 +96,13 @@ public class REST {
             response = new Response();
             response.setResponseStatus(httpURLConnection.getResponseCode());
             inputStream= httpURLConnection.getInputStream();
-            response.setInputStream(inputStream);
+            BufferedReader streamReader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"));
+            StringBuilder responseStrBuilder = new StringBuilder();
+
+            String inputStr;
+            while ((inputStr = streamReader.readLine()) != null)
+                responseStrBuilder.append(inputStr);
+            response.setInputStream(responseStrBuilder.toString());
             return response;
         } catch (UnsupportedEncodingException e) {
             Log.d("catch","UnsupportedEncodingException");

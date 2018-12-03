@@ -12,13 +12,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ListAdapter;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.sylwi.servicecarzlomekmobileaplication.R;
 import com.example.sylwi.servicecarzlomekmobileaplication.Service.AddVisit;
-import com.example.sylwi.servicecarzlomekmobileaplication.Service.ListCarsAdapter;
 import com.example.sylwi.servicecarzlomekmobileaplication.dialogs.DatePicker;
 import com.example.sylwi.servicecarzlomekmobileaplication.dialogs.TimePicker;
 import com.example.sylwi.servicecarzlomekmobileaplication.model.AddVisitModel;

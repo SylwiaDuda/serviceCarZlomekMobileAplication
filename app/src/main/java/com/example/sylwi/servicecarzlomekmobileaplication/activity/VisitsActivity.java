@@ -25,11 +25,11 @@ import com.example.sylwi.servicecarzlomekmobileaplication.rest.Response;
 
 import java.util.List;
 
-public class VisitsActivity extends ActivityForLoggedIn  implements NavigationView.OnNavigationItemSelectedListener {
+public class VisitsActivity extends ActivityForLoggedIn implements NavigationView.OnNavigationItemSelectedListener {
 
     private String ip;
     private boolean activeSerwer = true;
-    private GetVisitTask mGetVisitTask=null;
+    private GetVisitTask mGetVisitTask = null;
     private Response response = null;
     private Context mContext;
     private ListView visitListView;
@@ -52,13 +52,13 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        visitListView = (ListView)findViewById(R.id.visit_list);
+        visitListView = (ListView) findViewById(R.id.visit_list);
         InternalStorageDirMnager internalStorageDirMnager = new InternalStorageDirMnager();
         final String token = internalStorageDirMnager.getToken(mContext);
         mGetVisitTask = new GetVisitTask(token);
-        mGetVisitTask.execute((Void)null);
+        mGetVisitTask.execute((Void) null);
 
-        ((Button)findViewById(R.id.button_add_visit)).setOnClickListener(new View.OnClickListener() {
+        ((Button) findViewById(R.id.button_add_visit)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), AddVisitActivity.class);
@@ -67,8 +67,8 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
             }
         });
     }
-        //carListView = (ListView)findViewById(R.id.car_list);
-       // carListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
+    //carListView = (ListView)findViewById(R.id.car_list);
+    // carListView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
        /*carListView.setMultiChoiceModeListener(new AbsListView.MultiChoiceModeListener() {
             @Override
             public void onItemCheckedStateChanged(ActionMode actionMode, int i, long l, boolean b) {
@@ -148,6 +148,7 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
     public class GetVisitTask extends AsyncTask<Void, Void, Integer> {
 
         private final String mToken;
@@ -159,33 +160,34 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
         @Override
         protected Integer doInBackground(Void... params) {
             REST login = new REST();
-            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits",new TokenModel(mToken));
-            if(!(response==null)) {
-                activeSerwer=true;
-                int status=response.getResponseStatus();
+            response = login.requestWithMethodPOST("http://" + ip + ":8080/warsztatZlomek/rest/authorization/getFutureVisits", new TokenModel(mToken));
+            if (!(response == null)) {
+                activeSerwer = true;
+                int status = response.getResponseStatus();
                 Log.d("gggggggggggg:", String.valueOf(status));
+                if (status == 200)
+                    visitList = response.getNewVisit();
                 return status;
-            }else{
-                activeSerwer=false;
+            } else {
+                activeSerwer = false;
                 return -1;
             }
         }
+
         @Override
         protected void onPostExecute(final Integer status) {
-            mGetVisitTask= null;
+            mGetVisitTask = null;
             switch (status) {
                 case 200:
-                    visitList = response.getNewVisit();
-                    Log.d("vvvvvvvvvvvv: ",visitList.toString());
-
-                    ListVisitsAdapter adapter = new ListVisitsAdapter(mContext,R.layout.row_list_visits,visitList);
+                    Log.d("vvvvvvvvvvvv: ", visitList.toString());
+                    ListVisitsAdapter adapter = new ListVisitsAdapter(mContext, R.layout.row_list_visits, visitList);
                     visitListView.setAdapter(adapter);
                     break;
                 case 401:
                     //showProgress(false);
                     break;
                 case -1:
-                    if(!activeSerwer){
+                    if (!activeSerwer) {
                         //showProgress(false);
                         // String toastText = "Server is unreachable!";
                         //Toast toast = Toast.makeText(mContext, toastText, Toast.LENGTH_LONG);
@@ -197,6 +199,7 @@ public class VisitsActivity extends ActivityForLoggedIn  implements NavigationVi
                     break;
             }
         }
+
         @Override
         protected void onCancelled() {
             mGetVisitTask = null;
