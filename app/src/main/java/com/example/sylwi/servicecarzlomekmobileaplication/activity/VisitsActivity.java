@@ -95,7 +95,7 @@ public class VisitsActivity extends ActivityForLoggedIn implements NavigationVie
         } else if (id == R.id.nav_send) {
 
         }
-
+        //
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_visits);
         drawer.closeDrawer(GravityCompat.START);
         return true;
