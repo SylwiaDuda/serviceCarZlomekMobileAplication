@@ -43,7 +43,7 @@ public class ListVisitsAdapter extends ArrayAdapter<Visit> {
             TextView statusTV = (TextView)convertView.findViewById(R.id.status_visit);
             brandAndModelTV.setText(visit.getCar().getBrandName()+" "+visit.getCar().getModel());
             registrationNumberTV.setText(visit.getCar().getRegistrationNumber());
-            statusTV.setText(visit.getVisitStatus());
+            statusTV.setText(editStatus(visit.getVisitStatus()));
             Date dateObject = new Date();
             String dataString = visit.getVisitDate();
             Long dateLong = Long.valueOf(dataString);
@@ -51,15 +51,36 @@ public class ListVisitsAdapter extends ArrayAdapter<Visit> {
             GregorianCalendar gregorianCalendar = new GregorianCalendar();
             gregorianCalendar.setTime(dateObject);
 
-            String hour = Integer.toString(gregorianCalendar.get(gregorianCalendar.HOUR_OF_DAY));
-            String minuts = Integer.toString(gregorianCalendar.get(gregorianCalendar.MINUTE));
-            String day = Integer.toString(gregorianCalendar.get(gregorianCalendar.DAY_OF_MONTH));
-            String month = Integer.toString(gregorianCalendar.get(gregorianCalendar.MONTH)+1);
-            String year = Integer.toString(gregorianCalendar.get(gregorianCalendar.YEAR));
-            String dayMontYear = hour+":"+minuts+" "+day +"-"+month+"-"+year;
-            dateTV.setText(dayMontYear);
+            dateTV.setText(parseDate(gregorianCalendar));
 
         }
         return convertView;
+    }
+
+    private String parseDate(GregorianCalendar gregorianCalendar){
+        int minute = gregorianCalendar.get(Calendar.MINUTE);
+        int hourOfDay = gregorianCalendar.get(Calendar.HOUR_OF_DAY);
+        String currentMinute = (minute < 10) ? "0" + Integer.toString(minute) :
+                Integer.toString(minute);
+        String hour = (hourOfDay < 10) ? "0" + Integer.toString(hourOfDay) :
+                Integer.toString(hourOfDay);
+        String time = hour+":"+currentMinute;
+        String day = (gregorianCalendar.get(Calendar.DAY_OF_MONTH)<10)?"0"+gregorianCalendar.get(Calendar.DAY_OF_MONTH):
+                Integer.toString(gregorianCalendar.get(Calendar.DAY_OF_MONTH));
+        String month = (gregorianCalendar.get(Calendar.MONTH)+1<10)?"0"+gregorianCalendar.get(Calendar.MONTH):
+                Integer.toString(gregorianCalendar.get(Calendar.MONTH)+1);
+        return day + "-" + month+ "-" + gregorianCalendar.get(Calendar.YEAR)
+                + " " + time;
+    }
+
+    private String editStatus(String currentStatus){
+        switch (currentStatus) {
+            case "NEW": {return "Nowa";}
+            case "ACCEPTED": {return "Zaakceptowano";}
+            case "IN_PROGRESS": {return "W toku";}
+            case "FOR_PICKUP": {return "Do odbioru";}
+            case "FINISHED": {return "Zakończona";}
+        }
+        return "";
     }
 }
