@@ -40,8 +40,10 @@ public class ListVisitsAdapter extends ArrayAdapter<Visit> {
             TextView brandAndModelTV = (TextView)convertView.findViewById(R.id.car_brand_and_model);
             TextView registrationNumberTV = (TextView)convertView.findViewById(R.id.registration_number);
             TextView dateTV = (TextView)convertView.findViewById(R.id.date_visit);
+            TextView statusTV = (TextView)convertView.findViewById(R.id.status_visit);
             brandAndModelTV.setText(visit.getCar().getBrandName()+" "+visit.getCar().getModel());
             registrationNumberTV.setText(visit.getCar().getRegistrationNumber());
+            statusTV.setText(visit.getVisitStatus());
             Date dateObject = new Date();
             String dataString = visit.getVisitDate();
             Long dateLong = Long.valueOf(dataString);
@@ -49,12 +51,12 @@ public class ListVisitsAdapter extends ArrayAdapter<Visit> {
             GregorianCalendar gregorianCalendar = new GregorianCalendar();
             gregorianCalendar.setTime(dateObject);
 
-            //String hour = Integer.toString(gregorianCalendar.get(gregorianCalendar.HOUR));
-            //String minuts = Integer.toString(gregorianCalendar.get(gregorianCalendar.MINUTE));
-            String day = Integer.toString(gregorianCalendar.get(gregorianCalendar.DAY_OF_MONTH)+1);
+            String hour = Integer.toString(gregorianCalendar.get(gregorianCalendar.HOUR_OF_DAY));
+            String minuts = Integer.toString(gregorianCalendar.get(gregorianCalendar.MINUTE));
+            String day = Integer.toString(gregorianCalendar.get(gregorianCalendar.DAY_OF_MONTH));
             String month = Integer.toString(gregorianCalendar.get(gregorianCalendar.MONTH)+1);
             String year = Integer.toString(gregorianCalendar.get(gregorianCalendar.YEAR));
-            String dayMontYear = "0:0 "+day +"-"+month+"-"+year;
+            String dayMontYear = hour+":"+minuts+" "+day +"-"+month+"-"+year;
             dateTV.setText(dayMontYear);
 
         }

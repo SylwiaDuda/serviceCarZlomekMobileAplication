@@ -8,11 +8,13 @@ public class Visit {
     private String id;
     private String visitDate;
     private Car car;
+    private String visitStatus;
 
-    public Visit(String id, String visitDate, Car car) {
+    public Visit(String id, String visitDate, Car car, String visitStatus) {
         this.id = id;
         this.visitDate = visitDate;
         this.car = car;
+        this.visitStatus = visitStatus;
     }
 
     public Visit() {
@@ -43,12 +45,21 @@ public class Visit {
         this.car = car;
     }
 
+    public String getVisitStatus() {
+        return visitStatus;
+    }
+
+    public void setVisitStatus(String visitStatus) {
+        this.visitStatus = visitStatus;
+    }
+
     @Override
     public String toString() {
         return "Visit{" +
                 "id='" + id + '\'' +
                 ", visitDate='" + visitDate + '\'' +
                 ", car=" + car +
+                ", visitStatus='" + visitStatus + '\'' +
                 '}';
     }
 }

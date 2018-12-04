@@ -95,11 +95,12 @@ public class LoginActivity extends ActivityForNotLoggedIn implements LoaderCallb
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_layout);
         View loginLayout = findViewById(R.id.activity_login_layout);
+        loginLayout.getBackground().setAlpha(50);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
 
-        loginLayout.getBackground().setAlpha(50);
+
         mContext = getApplicationContext();
         ip = getString(R.string.ip);
         mEmailView = (AutoCompleteTextView) findViewById(R.id.email);

@@ -107,6 +107,7 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
                 }
                 AddVisit addVisit = new AddVisit(model, AddVisitActivity.this);
                 addVisit.execute();
+
             }
         });
 

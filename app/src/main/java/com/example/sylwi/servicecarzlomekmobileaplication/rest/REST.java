@@ -54,7 +54,6 @@ public class REST {
             httpURLConnection = getConnection(url);
             dataOutputStream = new DataOutputStream(httpURLConnection.getOutputStream());
             Gson gson = new Gson();
-            Log.d("String", gson.toJson(objectJSON));
             dataOutputStream.writeBytes(gson.toJson(objectJSON));
             dataOutputStream.flush();
             dataOutputStream.close();
@@ -68,6 +67,8 @@ public class REST {
             while ((inputStr = streamReader.readLine()) != null)
                 responseStrBuilder.append(inputStr);
 
+            Log.d("rrrrrrrrrrrrrrr", url);
+            Log.d("rrrrrrrrrrrrrrr", responseStrBuilder.toString());
             if(url.contains("/authorization/getFutureVisits")){
                 response.setNewVisitList(responseStrBuilder.toString());
             }else if(url.contains("/authorization/signIn")){
