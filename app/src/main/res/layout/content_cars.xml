@@ -16,7 +16,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        >
 
         <TextView
             android:id="@+id/cars_info"
@@ -49,41 +50,11 @@
             android:text="Dodaj samochód"
             android:textStyle="bold" />
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/baner1"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:text="Marka i model"
-                android:textAppearance="@style/TextAppearance.Design.Tab"
-                android:textStyle="bold"
-                android:textColor="@color/colorBanerListView"/>
-
-            <TextView
-                android:id="@+id/baner2"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:text="Nr rejestracyjny"
-                android:textAppearance="@style/TextAppearance.Design.Tab"
-                android:textStyle="bold"
-                android:textColor="@color/colorBanerListView"/>
-        </TableRow>
         <ListView
             android:id="@+id/car_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:paddingTop="16dp"/>
 
     </LinearLayout>
 

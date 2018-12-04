@@ -42,13 +42,6 @@ public class Response {
         this.responseStatus = responseStatus;
     }
 
-    public InputStream getInputStream() {
-        return inputStream;
-    }
-
-    public void setInputStream(InputStream inputStream) {
-        this.inputStream = inputStream;
-    }
 
     public List<Visit> getNewVisitList() {
         return newVisitList;

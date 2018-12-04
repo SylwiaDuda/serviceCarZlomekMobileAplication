@@ -49,49 +49,6 @@
             android:text="Umów wizytę"
             android:textStyle="bold" />
 
-        <TableRow
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
-
-            <TextView
-                android:id="@+id/baner1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:text="Marka i model"
-                android:textAppearance="@style/TextAppearance.Design.Tab"
-                android:textStyle="bold"
-                android:textColor="@color/colorBanerListView"/>
-
-            <TextView
-                android:id="@+id/baner2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:text="Nr reje."
-                android:textAppearance="@style/TextAppearance.Design.Tab"
-                android:textStyle="bold"
-                android:textColor="@color/colorBanerListView"/>
-            <TextView
-                android:id="@+id/baner3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingBottom="10dp"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
-                android:paddingTop="10dp"
-                android:text="Data wizyty"
-                android:textAppearance="@style/TextAppearance.Design.Tab"
-                android:textStyle="bold"
-                android:textColor="@color/colorBanerListView"/>
-        </TableRow>
         <ListView
             android:id="@+id/visit_list"
             android:layout_width="match_parent"

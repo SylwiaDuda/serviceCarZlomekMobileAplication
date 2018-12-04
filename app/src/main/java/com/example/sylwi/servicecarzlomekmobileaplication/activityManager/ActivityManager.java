@@ -34,7 +34,6 @@ public abstract class ActivityManager extends AppCompatActivity {
     }
 
     public void goToActivity(Class<?> newActivity){
-        //String activityClassName = getClass().getSimpleName();
         Intent intent = new Intent(this,newActivity);
         startActivity(intent);
     };

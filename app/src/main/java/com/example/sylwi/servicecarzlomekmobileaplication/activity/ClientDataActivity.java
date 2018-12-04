@@ -48,7 +48,8 @@ public class ClientDataActivity extends ActivityForLoggedIn implements Navigatio
         setContentView(R.layout.activity_data_client_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        View ClientDataLayout = findViewById(R.id.activity_data_client);
+        ClientDataLayout.getBackground().setAlpha(50);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_data_client);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
