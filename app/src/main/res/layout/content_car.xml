@@ -14,6 +14,7 @@
     tools:showIn="@layout/app_bar_car">
 
     <LinearLayout
+        android:id="@+id/car_data"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -160,19 +161,10 @@
                     android:paddingTop="@dimen/activity_vertical_margin">
 
                     <Button
-                        android:id="@+id/delete_car_button"
-                        style="@android:style/Widget.Button"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="Usuń samochód"
-
-                        android:textStyle="bold" />
-                    <Button
                         android:id="@+id/edit_car_button"
                         style="@android:style/Widget.Button"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="Edytuj dane"
 
@@ -185,7 +177,175 @@
 
 
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/car_edit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
+
+        <TextView
+            android:id="@+id/add_car_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/abril_fatface"
+            android:text="Edycja dnych samochodu"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="30sp" />
+
+        <ProgressBar
+            android:id="@+id/add_car_progress"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:visibility="gone" />
+        <ScrollView
+            android:id ="@+id/add_car_form"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/brand_info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/spinner_band_form"
+                    android:layout_alignBottom="@id/spinner_band_form"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/spinner_band_form"
+                    android:text="@string/brand"
+                    android:textSize="18sp" />
+
+                <Spinner
+                    android:id="@+id/spinner_band_form"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@id/brand_info2" />
+
+                <TextView
+                    android:id="@+id/model_info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/model_form2"
+                    android:layout_alignBottom="@id/model_form2"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/model_form"
+                    android:text="@string/model"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/model_form2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/brand_info2"
+                    android:layout_toEndOf="@id/model_info2"
+                    android:inputType="text" />
+
+                <TextView
+                    android:id="@+id/registration_number_info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/registration_number_form2"
+                    android:layout_alignBottom="@id/registration_number_form2"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/registration_number_form"
+                    android:text="@string/registration_number"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/registration_number_form2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/model_form2"
+                    android:layout_toEndOf="@id/registration_number_info2"
+                    android:inputType="text" />
+
+                <TextView
+                    android:id="@+id/production_year_info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/production_year_form2"
+                    android:layout_alignBottom="@id/production_year_form2"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/production_year_form"
+                    android:text="@string/production_year"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/production_year_form2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/registration_number_form2"
+                    android:layout_toEndOf="@id/production_year_info2"
+                    android:inputType="number" />
+
+                <TextView
+                    android:id="@+id/vin_number_info2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@id/vin_number_form2"
+                    android:layout_alignBottom="@id/vin_number_form2"
+                    android:layout_alignParentStart="true"
+                    android:labelFor="@id/vin_number_form"
+                    android:text="@string/vin_number"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/vin_number_form2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_below="@id/production_year_form2"
+                    android:layout_toEndOf="@id/vin_number_info2"
+                    android:inputType="text" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/vin_number_form2"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/cancel_button"
+                        style="@android:style/Widget.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/cancel"
+
+                        />
+
+                    <Button
+                        android:id="@+id/save_button"
+                        style="@android:style/Widget.Button"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Zapisz"
+
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </RelativeLayout>
+        </ScrollView>
+    </LinearLayout>
 </RelativeLayout>
 
 

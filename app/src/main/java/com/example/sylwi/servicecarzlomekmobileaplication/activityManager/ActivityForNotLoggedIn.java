@@ -42,6 +42,8 @@ public class ActivityForNotLoggedIn extends ActivityManager {
         clientCar.setVisible(false);
         MenuItem clientVisits =  menu.findItem(R.id.action_visits);
         clientVisits.setVisible(false);
+        MenuItem home =  menu.findItem(R.id.action_home);
+        home.setVisible(false);
         return true;
     }
 }

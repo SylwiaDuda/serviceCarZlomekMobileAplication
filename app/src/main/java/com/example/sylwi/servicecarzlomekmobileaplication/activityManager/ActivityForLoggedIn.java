@@ -7,6 +7,7 @@ import com.example.sylwi.servicecarzlomekmobileaplication.Service.InternalStorag
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.CarsActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.ClientDataActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.LoginActivity;
+import com.example.sylwi.servicecarzlomekmobileaplication.activity.MainActivity;
 import com.example.sylwi.servicecarzlomekmobileaplication.activity.VisitsActivity;
 
 /**
@@ -19,6 +20,10 @@ public class ActivityForLoggedIn extends ActivityManager {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
+        if(id == R.id.action_home){
+            goToActivity(MainActivity.class);
+            return true;
+        }
         if(id == R.id.action_check_your_profil){
             goToActivity(ClientDataActivity.class);
             return true;
@@ -52,6 +57,8 @@ public class ActivityForLoggedIn extends ActivityManager {
         logOut.setVisible(true);
         MenuItem clientProfile =  menu.findItem(R.id.action_check_your_profil);
         clientProfile.setVisible(true);
+        MenuItem home =  menu.findItem(R.id.action_home);
+        home.setVisible(true);
         return true;
     }
 

@@ -96,6 +96,13 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
         mGetCarsTask.execute((Void) null);
 
 
+        Button cancelButton = (Button)findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToActivity(VisitsActivity.class);
+            }
+        });
 
         Button addVisitButton = (Button)findViewById(R.id.add_visit_button);
         addVisitButton.setOnClickListener(new View.OnClickListener() {
