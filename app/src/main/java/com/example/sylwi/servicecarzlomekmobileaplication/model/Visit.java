@@ -1,10 +1,13 @@
 package com.example.sylwi.servicecarzlomekmobileaplication.model;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by sylwi on 20.11.2018.
  */
 
-public class Visit {
+public class Visit implements Parcelable {
     private String id;
     private String visitDate;
     private Car car;
@@ -17,9 +20,24 @@ public class Visit {
         this.visitStatus = visitStatus;
     }
 
-    public Visit() {
-        car=new Car();
+    protected Visit(Parcel in) {
+        id = in.readString();
+        visitDate = in.readString();
+        car = in.readParcelable(Car.class.getClassLoader());
+        visitStatus = in.readString();
     }
+
+    public static final Creator<Visit> CREATOR = new Creator<Visit>() {
+        @Override
+        public Visit createFromParcel(Parcel in) {
+            return new Visit(in);
+        }
+
+        @Override
+        public Visit[] newArray(int size) {
+            return new Visit[size];
+        }
+    };
 
     public String getId() {
         return id;
@@ -48,18 +66,21 @@ public class Visit {
     public String getVisitStatus() {
         return visitStatus;
     }
-
     public void setVisitStatus(String visitStatus) {
         this.visitStatus = visitStatus;
     }
 
+
     @Override
-    public String toString() {
-        return "Visit{" +
-                "id='" + id + '\'' +
-                ", visitDate='" + visitDate + '\'' +
-                ", car=" + car +
-                ", visitStatus='" + visitStatus + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(visitDate);
+        dest.writeParcelable(car, flags);
+        dest.writeString(visitStatus);
     }
 }
