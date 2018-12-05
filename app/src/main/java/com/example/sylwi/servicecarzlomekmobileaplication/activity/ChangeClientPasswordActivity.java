@@ -117,6 +117,7 @@ public class ChangeClientPasswordActivity extends ActivityForLoggedIn implements
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+         /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -129,7 +130,7 @@ public class ChangeClientPasswordActivity extends ActivityForLoggedIn implements
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_change_client_password);
         drawer.closeDrawer(GravityCompat.START);

@@ -193,6 +193,7 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+   /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -205,7 +206,7 @@ public class AddVisitActivity extends ActivityForLoggedIn implements NavigationV
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_add_visit);
         drawer.closeDrawer(GravityCompat.START);

@@ -155,6 +155,7 @@ public class VisitsActivity extends ActivityForLoggedIn implements NavigationVie
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+    /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -167,7 +168,7 @@ public class VisitsActivity extends ActivityForLoggedIn implements NavigationVie
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_visits);
         drawer.closeDrawer(GravityCompat.START);
         return true;
