@@ -149,6 +149,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+     /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -161,7 +162,7 @@ public class CarsActivity extends ActivityForLoggedIn implements NavigationView.
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_cars);
         drawer.closeDrawer(GravityCompat.START);

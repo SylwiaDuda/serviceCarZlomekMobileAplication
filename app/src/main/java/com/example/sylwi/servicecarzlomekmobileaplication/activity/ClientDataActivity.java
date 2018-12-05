@@ -114,6 +114,7 @@ public class ClientDataActivity extends ActivityForLoggedIn implements Navigatio
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+      /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -126,7 +127,7 @@ public class ClientDataActivity extends ActivityForLoggedIn implements Navigatio
 
         } else if (id == R.id.nav_send) {
 
-        }
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_data_client);
         drawer.closeDrawer(GravityCompat.START);

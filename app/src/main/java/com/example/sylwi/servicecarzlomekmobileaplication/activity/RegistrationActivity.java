@@ -156,6 +156,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+           /*
         if (id == R.id.nav_camera) {
             // Handle the camera action
         } else if (id == R.id.nav_gallery) {
@@ -168,8 +169,7 @@ public class RegistrationActivity extends ActivityForNotLoggedIn implements Navi
 
         } else if (id == R.id.nav_send) {
 
-        }
-
+        }*/
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.activity_registration_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
